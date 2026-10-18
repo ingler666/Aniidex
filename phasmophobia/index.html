@@ -52,6 +52,11 @@ header p{margin:4px 0 0;color:var(--muted)}
 .ev[data-s="2"] .t{text-decoration:line-through}
 .ev.dead{opacity:.38}
 .hint{margin:10px 0 0;font-size:.82rem;color:var(--muted)}
+.search{display:flex;align-items:center;gap:8px;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:0 12px}
+.search:focus-within{border-color:var(--uv)}
+.search svg{flex:none;color:var(--muted)}
+.search input{flex:1;min-width:0;font:inherit;font-size:16px;border:0;background:transparent;color:var(--ink);padding:12px 0;outline:none}
+.search input::placeholder{color:var(--muted)}
 .count{font-family:var(--hand);font-size:1.45rem;margin:0}
 .count b{color:var(--uv)}
 .list{display:flex;flex-direction:column;gap:8px}
@@ -139,6 +144,8 @@ footer{font-size:.78rem;color:var(--muted)}
     <div class="evs" id="evs"></div>
     <p class="hint">Las pruebas atenuadas ya no son posibles con lo que marcaste.</p>
   </section>
+
+  <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="q" placeholder="Buscar fantasma por nombre…" autocomplete="off" aria-label="Buscar fantasma por nombre"></label>
 
   <section aria-live="polite">
     <p class="count" id="count"></p>
@@ -400,13 +407,15 @@ function render(){
     b.setAttribute("aria-label", e.n + (s===1?": encontrada":s===2?": descartada":": sin marcar"));
     b.classList.toggle("dead", s===0 && !list.some(g=>shows(g).includes(e.k)));
   });
-  const c = list.length;
+  const q = norm(document.getElementById("q").value.trim());
+  const shown = q ? list.filter(g=>norm(g.n+" "+g.en).includes(q)) : list;
+  const c = shown.length;
   document.getElementById("count").innerHTML = c===0 ? "Ningún fantasma coincide" :
-    c===1 ? "¡Es <b>"+list[0].n+"</b>!" : "<b>"+c+"</b> fantasmas posibles";
+    c===1 ? (q ? "<b>"+shown[0].n+"</b>" : "¡Es <b>"+shown[0].n+"</b>!") : "<b>"+c+"</b> fantasmas posibles";
   const L = document.getElementById("list");
   const open = new Set([...L.querySelectorAll("details[open]")].map(d=>d.dataset.n));
-  if(!c){ L.innerHTML = '<div class="none">Revisa las pruebas marcadas: alguna combinación no existe.</div>'; return; }
-  L.innerHTML = list.map(g=>{
+  if(!c){ L.innerHTML = q ? '<div class="none">Ningún fantasma con ese nombre'+(list.length<G.length?' entre los que coinciden con tus pruebas':'')+'.</div>' : '<div class="none">Revisa las pruebas marcadas: alguna combinación no existe.</div>'; return; }
+  L.innerHTML = shown.map(g=>{
     const tags = g.ev.map(k=>`<span class="tag${state[k]===1?" hit":""}">${SHORT[k]}</span>`).join("")
       + (g.fake?`<span class="tag fake${state[g.fake]===1?" hit":""}">${SHORT[g.fake]} (falsa)</span>`:"");
     return `<details data-n="${g.en}"${open.has(g.en)||c===1?" open":""}>
@@ -419,6 +428,8 @@ function render(){
       </div></details>`;
   }).join("");
 }
+function norm(t){return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
+document.getElementById("q").addEventListener("input",render);
 render();
 
 // ---- Pestañas
