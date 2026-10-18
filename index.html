@@ -2,50 +2,229 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ingler.me</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ingler.me · Guías y bases de datos de juegos</title>
+<meta name="description" content="Guías, bases de datos y herramientas interactivas para videojuegos, en español.">
+<meta name="theme-color" content="#0b0d14">
 <script>
   // Si llega un enlace de inicio de sesión de la Aniidex a la portada, mándalo a /aniimo/
   if (/access_token=|error_description=/.test(location.hash)) location.replace("/aniimo/" + location.hash);
 </script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='%23e8b923'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Ctext x='32' y='44' font-family='Arial' font-weight='900' font-size='34' text-anchor='middle' fill='white'%3Ei%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f1ea;--card:#fffdf8;--ink:#1f1d1a;--muted:#6d675d;--line:#e3ddd0;--accent:#2e7d4f;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121110;--card:#1c1a18;--ink:#f1ede6;--muted:#a59e92;--line:#2f2c28;--accent:#5fc489;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#121110;--card:#1c1a18;--ink:#f1ede6;--muted:#a59e92;--line:#2f2c28;--accent:#5fc489;color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
-  padding:48px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left))}
-main{max-width:760px;margin:0 auto}
-h1{font-size:2.2rem;letter-spacing:-.02em;margin:0}
-.sub{color:var(--muted);margin:6px 0 28px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-a.app{display:flex;align-items:center;gap:16px;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;transition:transform .15s,border-color .15s}
-a.app:hover{transform:translateY(-2px);border-color:var(--accent)}
-a.app:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.ic{flex:none;width:60px;height:60px;border-radius:14px;display:grid;place-items:center;overflow:hidden}
-.ic img{width:100%;height:100%;object-fit:cover}
-.ic.an{background:#2e7d4f}
-.app b{display:block;font-size:1.1rem}
-.app span{font-size:.9rem;color:var(--muted)}
-footer{margin-top:36px;font-size:.8rem;color:var(--muted)}
+  :root{
+    --bg:#0b0d14; --bg2:#11141f; --card:#151926; --line:#232838;
+    --text:#eef0f7; --muted:#9aa1b5; --dim:#6b7288;
+    --accent:#7c5cff; --accent2:#22d3ee;
+    --aniimo:#5ec8ff; --phasmo:#b5ff6a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.5; min-height:100vh; overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(600px 400px at 85% -5%, rgba(124,92,255,.28), transparent 70%),
+      radial-gradient(500px 380px at -10% 35%, rgba(34,211,238,.14), transparent 70%);
+  }
+  .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom, #000 0%, transparent 55%);
+    -webkit-mask-image:linear-gradient(to bottom, #000 0%, transparent 55%);
+  }
+  .wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 18px}
+
+  /* Nav */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em}
+  .logo-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));font-size:18px;color:#fff;box-shadow:0 6px 20px rgba(124,92,255,.4)}
+  .logo span{color:var(--dim)}
+  .pill{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;display:flex;align-items:center;gap:7px;background:rgba(21,25,38,.7)}
+  .dot{width:7px;height:7px;border-radius:50%;background:#3ee07a;box-shadow:0 0 0 3px rgba(62,224,122,.18)}
+
+  /* Hero */
+  header{padding:36px 0 28px}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:14px}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,8vw,60px);line-height:1.04;letter-spacing:-.035em;max-width:720px}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--muted);font-size:17px;margin-top:16px;max-width:560px}
+
+  /* Search */
+  .search{margin-top:26px;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 6px 4px 14px;max-width:520px;transition:border-color .2s}
+  .search:focus-within{border-color:var(--accent)}
+  .search svg{flex:none;color:var(--dim)}
+  .search input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:16px;padding:12px 0}
+  .search input::placeholder{color:var(--dim)}
+
+  /* Filters */
+  .filters{display:flex;gap:8px;margin:34px 0 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:none;font:inherit;font-size:14px;font-weight:500;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer;transition:all .15s}
+  .chip:hover{color:var(--text)}
+  .chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+  /* Cards */
+  .cards{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:720px){.cards{grid-template-columns:1fr 1fr}}
+  .card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .2s, border-color .2s, box-shadow .2s}
+  .card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 55%, var(--line));box-shadow:0 18px 40px -18px color-mix(in srgb,var(--c) 60%, transparent)}
+  .banner{height:120px;position:relative;overflow:hidden}
+  .banner::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card))}
+  .b-aniimo{background:radial-gradient(circle at 25% 30%,#bdeaff 0,transparent 45%),radial-gradient(circle at 80% 70%,#6ad6a4 0,transparent 50%),linear-gradient(135deg,#2b7fd8,#4fc3f7)}
+  .b-phasmo{background:radial-gradient(circle at 75% 20%,rgba(181,255,106,.35) 0,transparent 45%),repeating-linear-gradient(115deg,#0d1210 0 14px,#111a14 14px 28px)}
+  .banner .art{position:absolute;right:14px;top:12px;font-size:64px;opacity:.9;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
+  .body{padding:0 20px 20px;margin-top:-34px;position:relative;z-index:1;display:flex;flex-direction:column;flex:1}
+  .icon{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-size:30px;border:3px solid var(--card);margin-bottom:12px}
+  .icon{overflow:hidden}.icon img{width:100%;height:100%;object-fit:cover;display:block}
+  .i-aniimo{background:linear-gradient(135deg,#e9f7ff,#9fdcff)}
+  .i-phasmo{background:#000;color:#fff;font-family:Georgia,serif;font-weight:700;font-size:34px}
+  .game{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+  .card h2{font-family:'Space Grotesk',sans-serif;font-size:23px;letter-spacing:-.02em;margin:2px 0 6px}
+  .card p{color:var(--muted);font-size:15px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 18px}
+  .tag{font-size:12px;font-weight:500;color:var(--muted);background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:4px 9px}
+  .cta{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+  .cta .arrow{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#0b0d14;transition:transform .2s}
+  .card:hover .arrow{transform:translateX(3px)}
+  .card .path{color:var(--dim);font-weight:500}
+
+  .soon{border-style:dashed;background:transparent;justify-content:center;align-items:center;text-align:center;padding:34px 20px;min-height:200px}
+  .soon:hover{transform:none;box-shadow:none;border-color:var(--line)}
+  .soon .plus{width:52px;height:52px;border-radius:16px;border:1px dashed var(--dim);display:grid;place-items:center;font-size:26px;color:var(--dim);margin-bottom:12px}
+  .soon h2{font-size:19px}
+  .empty{display:none;color:var(--muted);padding:30px 0;text-align:center}
+
+  /* Features */
+  section.features{margin:64px 0 0}
+  .sec-title{font-family:'Space Grotesk',sans-serif;font-size:24px;letter-spacing:-.02em;margin-bottom:18px}
+  .feat{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:720px){.feat{grid-template-columns:repeat(3,1fr)}}
+  .f{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:20px}
+  .f .fi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;margin-bottom:12px;background:rgba(124,92,255,.14);color:var(--accent)}
+  .f:nth-child(2) .fi{background:rgba(34,211,238,.12);color:var(--accent2)}
+  .f:nth-child(3) .fi{background:rgba(181,255,106,.12);color:var(--phasmo)}
+  .f h3{font-size:16px;margin-bottom:4px}
+  .f p{color:var(--muted);font-size:14px}
+
+  footer{margin:64px 0 0;padding:26px 0 40px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px;color:var(--dim);font-size:13px}
+  footer strong{color:var(--muted);font-weight:600}
 </style>
 </head>
 <body>
-<main>
-  <h1>ingler.me</h1>
-  <p class="sub">Mis guías y herramientas de juegos.</p>
-  <div class="grid">
-    <a class="app" href="/aniimo/">
-      <div class="ic" aria-hidden="true"><img src="/aniimo/icon-192.png" alt=""></div>
-      <div><b>Mi Aniidex de Idyll</b><span>Aniimo · inventario, equipos y progreso</span></div>
-    </a>
-    <a class="app" href="/phasmophobia/">
-      <div class="ic" aria-hidden="true"><img src="/phasmophobia/icon-192.png" alt=""></div>
-      <div><b>Guía Phasmophobia</b><span>Fantasmas, pruebas y herramientas</span></div>
-    </a>
+<div class="glow"></div><div class="grid-bg"></div>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="/"><div class="logo-mark">i</div>ingler<span>.me</span></a>
+    <div class="pill"><span class="dot"></span>En línea</div>
+  </nav>
+
+  <header>
+    <div class="eyebrow">Guías · Bases de datos · Herramientas</div>
+    <h1>Todo lo que necesitas para <em>dominar tus juegos</em>.</h1>
+    <p class="lead">Guías interactivas y bases de datos en español, hechas por un jugador para jugadores. Rápidas, fáciles de usar y listas para el móvil.</p>
+
+    <label class="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar un juego o guía…" autocomplete="off">
+    </label>
+  </header>
+
+  <div class="filters" id="filters">
+    <button class="chip on" data-f="all">Todo</button>
+    <button class="chip" data-f="db">Bases de datos</button>
+    <button class="chip" data-f="guia">Guías</button>
+    <button class="chip" data-f="tool">Herramientas</button>
   </div>
-  <footer>ingler.me</footer>
-</main>
+
+  <main class="cards" id="cards">
+    <a class="card" href="/aniimo/" style="--c:var(--aniimo)" data-k="db tool" data-s="aniimo aniidex idyll inventario equipos progreso coleccion">
+      <div class="banner b-aniimo"><div class="art">🐾</div></div>
+      <div class="body">
+        <div class="icon i-aniimo"><img src="/aniimo/icon-192.png" alt=""></div>
+        <div class="game">Aniimo</div>
+        <h2>Mi Aniidex de Idyll</h2>
+        <p>Base de datos de Aniimos para marcar tu colección, revisar tu inventario y armar equipos según lo que tienes.</p>
+        <div class="tags"><span class="tag">Base de datos</span><span class="tag">Colección</span><span class="tag">Armador de equipos</span></div>
+        <div class="cta"><span>Abrir Aniidex <span class="path">· /aniimo</span></span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="/phasmophobia/" style="--c:var(--phasmo)" data-k="db guia tool" data-s="phasmophobia fantasmas pruebas evidencias herramientas guia">
+      <div class="banner b-phasmo"><div class="art">👻</div></div>
+      <div class="body">
+        <div class="icon i-phasmo"><img src="/phasmophobia/icon-192.png" alt=""></div>
+        <div class="game">Phasmophobia</div>
+        <h2>Guía Phasmophobia</h2>
+        <p>Identifica al fantasma filtrando por pruebas. Fuerzas, debilidades, pistas y comportamiento de cada uno.</p>
+        <div class="tags"><span class="tag">Guía</span><span class="tag">Filtro de pruebas</span><span class="tag">Fantasmas</span></div>
+        <div class="cta"><span>Abrir guía <span class="path">· /phasmophobia</span></span><span class="arrow">→</span></div>
+      </div>
+    </a>
+
+    <div class="card soon" data-k="all" data-s="">
+      <div class="plus">+</div>
+      <h2>Más juegos en camino</h2>
+      <p>Nuevas guías y bases de datos se irán sumando aquí.</p>
+    </div>
+  </main>
+  <p class="empty" id="empty">No hay resultados para esa búsqueda.</p>
+
+  <section class="features">
+    <h2 class="sec-title">¿Qué encontrarás aquí?</h2>
+    <div class="feat">
+      <div class="f">
+        <div class="fi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+        <h3>Bases de datos</h3>
+        <p>Personajes, criaturas y objetos organizados para encontrar lo que buscas en segundos.</p>
+      </div>
+      <div class="f">
+        <div class="fi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h8M8 11h6"/></svg></div>
+        <h3>Guías claras</h3>
+        <p>Explicaciones directas en español, sin rodeos y pensadas para usar mientras juegas.</p>
+      </div>
+      <div class="f">
+        <div class="fi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
+        <h3>Herramientas</h3>
+        <p>Filtros, rastreadores y armadores interactivos que guardan tu progreso.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div><strong>ingler.me</strong> · Guías y bases de datos de juegos</div>
+    <div>Sitio hecho por fans. No afiliado a los desarrolladores de los juegos; todas las marcas pertenecen a sus dueños.</div>
+  </footer>
+</div>
+
+<script>
+  const q=document.getElementById('q'), cards=[...document.querySelectorAll('#cards .card')],
+        chips=[...document.querySelectorAll('.chip')], empty=document.getElementById('empty');
+  let f='all';
+  function apply(){
+    const t=q.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    let shown=0;
+    cards.forEach(c=>{
+      const soon=c.classList.contains('soon');
+      const okF = f==='all' || soon || c.dataset.k.includes(f);
+      const okQ = !t || (!soon && c.dataset.s.includes(t)) || (!soon && c.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(t));
+      const vis = soon ? (!t) : (okF && okQ);
+      c.style.display = vis ? '' : 'none';
+      if(vis && !soon) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  chips.forEach(ch=>ch.onclick=()=>{chips.forEach(x=>x.classList.remove('on'));ch.classList.add('on');f=ch.dataset.f;apply();});
+  q.addEventListener('input',apply);
+</script>
 </body>
 </html>
