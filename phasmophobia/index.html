@@ -57,6 +57,85 @@ header p{margin:4px 0 0;color:var(--muted)}
 .search svg{flex:none;color:var(--muted)}
 .search input{flex:1;min-width:0;font:inherit;font-size:16px;border:0;background:transparent;color:var(--ink);padding:12px 0;outline:none}
 .search input::placeholder{color:var(--muted)}
+.opts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.opts .lbl{margin:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{font:inherit;font-size:.85rem;font-weight:700;border:0;border-radius:999px;padding:5px 11px;background:transparent;color:var(--muted);cursor:pointer;font-variant-numeric:tabular-nums}
+.seg button[aria-pressed="true"]{background:var(--uv);color:var(--paper)}
+.sharebtn{font:inherit;font-size:.85rem;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.sharebtn[aria-pressed="true"]{border-color:var(--ok);background:var(--ok-soft)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.sharebtn[aria-pressed="true"] .dot{background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.sharemsg{width:100%;font-size:.8rem;color:var(--muted);margin:0}
+.sharemsg:empty{display:none}
+.room{width:100%;display:flex;flex-direction:column;gap:8px}
+.roomrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.roomrow[hidden]{display:none}
+.join{display:flex;gap:6px}
+.join input{width:92px;font:inherit;font-size:16px;font-weight:700;letter-spacing:.2em;text-align:center;border:1.5px solid var(--line);border-radius:999px;padding:6px 10px;background:transparent;color:var(--ink)}
+.join input:focus{outline:none;border-color:var(--uv)}
+.code{font-family:var(--hand);font-weight:700;font-size:2rem;line-height:1;letter-spacing:.12em;color:var(--uv);font-variant-numeric:tabular-nums}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--ok)}
+.live .dot{background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.dsc{align-self:flex-start;font:inherit;font-size:.82rem;font-weight:700;border:1.5px solid var(--no);color:var(--no);background:transparent;border-radius:999px;padding:5px 12px;cursor:pointer}
+.descart{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.descart h3{font-family:var(--hand);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
+.drow{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;opacity:.7}
+.drow s{font-family:var(--hand);font-size:1.1rem}
+.drow button{font:inherit;font-size:.8rem;font-weight:700;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
+.timer{display:flex;flex-direction:column;gap:10px}
+.clock{font-family:var(--hand);font-weight:700;font-size:3rem;line-height:1;color:var(--uv);font-variant-numeric:tabular-nums}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:inherit;font-weight:700;font-size:.92rem;border:0;border-radius:10px;padding:11px 14px;background:var(--uv);color:var(--paper);cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+.bar{position:relative;height:12px;border-radius:999px;background:var(--uv-soft);overflow:visible;margin:22px 0 26px}
+.bar .fill{position:absolute;inset:0 auto 0 0;border-radius:999px;background:var(--uv);width:0}
+.bar .bm{position:absolute;top:-5px;width:2px;height:22px;background:var(--ink)}
+.bar .bm span{position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:.7rem;white-space:nowrap;color:var(--muted);text-align:center;line-height:1.1}
+.verdict{font-size:.92rem;background:var(--uv-soft);border-radius:10px;padding:10px 12px;margin:0}
+.verdict:empty{display:none}
+.tap{width:100%;min-height:120px;font:inherit;font-family:var(--hand);font-weight:700;font-size:1.6rem;border:2px dashed var(--uv);border-radius:16px;background:var(--uv-soft);color:var(--ink);cursor:pointer;touch-action:manipulation;user-select:none}
+.tap:active{transform:scale(.98)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{font-family:var(--hand);font-size:1.25rem;margin:0;line-height:1.1}
+.card p{margin:0;font-size:.9rem}
+.card ul{margin:0;padding-left:18px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
+.card .warn{font-size:.85rem;background:var(--no-soft);border-radius:8px;padding:6px 9px}
+.card .ok{font-size:.85rem;background:var(--ok-soft);border-radius:8px;padding:6px 9px}
+.tiers{width:100%;border-collapse:collapse;font-size:.86rem}
+.tiers th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 6px 4px;font-weight:700}
+.tiers td{padding:7px 6px;border-top:1px solid var(--line);vertical-align:top}
+.tiers td:first-child{font-family:var(--hand);font-weight:700;font-size:1rem;white-space:nowrap}
+.cardtbl{overflow-x:auto}
+.tarot td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.list>details{width:100%;min-width:0}
+.side,.main{display:flex;flex-direction:column;gap:18px;min-width:0}
+/* Celular: la tabla de equipo se vuelve tarjetas */
+@media (max-width:700px){
+  .eq tr:first-child{display:none}
+  .eq tr{display:block;border-top:1px solid var(--line);padding:10px 0}
+  .eq td{display:grid;grid-template-columns:76px 1fr;gap:10px;border:0;padding:3px 0}
+  .eq td:first-child{display:block;font-size:1.2rem;padding-bottom:4px}
+  .eq td[data-l]::before{content:attr(data-l);font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+  .tabs .tab{font-size:.85rem;padding:9px 8px}
+  .clock{font-size:2.6rem}
+}
+/* PC: más ancho y en columnas */
+@media (min-width:1000px){
+  .wrap{max-width:1180px}
+  header > p:last-child{max-width:640px}
+  #view-ev:not([hidden]){display:grid;grid-template-columns:400px minmax(0,1fr);gap:20px;align-items:start}
+  #view-ev .side{position:sticky;top:16px}
+  #view-ev .evs{grid-template-columns:1fr 1fr}
+  #view-wx:not([hidden]){display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  #view-wx > .panel:first-child{grid-column:1/-1}
+  #view-hr:not([hidden]){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+  #view-eq:not([hidden]){display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
+  #view-eq .cards{grid-template-columns:1fr}
+  .tab{font-size:.95rem}
+}
 .count{font-family:var(--hand);font-size:1.45rem;margin:0}
 .count b{color:var(--uv)}
 .list{display:flex;flex-direction:column;gap:8px}
@@ -85,8 +164,8 @@ summary::-webkit-details-marker{display:none}
 .sw .w{background:var(--ok-soft)}
 .lbl{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
 .sw .f .lbl{color:var(--no)} .sw .w .lbl{color:var(--ok)}
-.tabs{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
-.tab{flex:1;font:inherit;font-weight:700;font-size:.9rem;border:0;border-radius:999px;padding:9px 10px;background:transparent;color:var(--muted);cursor:pointer}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:4px}
+.tab{flex:1 1 auto;white-space:nowrap;font:inherit;font-weight:700;font-size:.9rem;border:0;border-radius:999px;padding:9px 10px;background:transparent;color:var(--muted);cursor:pointer}
 .tab[aria-selected="true"]{background:var(--uv);color:var(--paper)}
 .tab:focus-visible,.wx:focus-visible{outline:2px solid var(--uv);outline-offset:2px}
 .view{display:flex;flex-direction:column;gap:18px}
@@ -132,10 +211,14 @@ footer{font-size:.78rem;color:var(--muted)}
 
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tab-ev" aria-selected="true" type="button">Pruebas y fantasmas</button>
+    <button class="tab" role="tab" id="tab-hr" aria-selected="false" type="button">Herramientas</button>
+    <button class="tab" role="tab" id="tab-ob" aria-selected="false" type="button">Objetos malditos</button>
     <button class="tab" role="tab" id="tab-wx" aria-selected="false" type="button">Clima y temperatura</button>
+    <button class="tab" role="tab" id="tab-eq" aria-selected="false" type="button">Equipo y mapas</button>
   </div>
 
   <div class="view" id="view-ev">
+  <div class="side">
   <section class="panel" aria-labelledby="h-ev">
     <div class="panel-head">
       <h2 id="h-ev">Pruebas</h2>
@@ -143,14 +226,91 @@ footer{font-size:.78rem;color:var(--muted)}
     </div>
     <div class="evs" id="evs"></div>
     <p class="hint">Las pruebas atenuadas ya no son posibles con lo que marcaste.</p>
+    <div class="opts">
+      <span class="lbl">Pruebas en la partida</span>
+      <div class="seg" id="dif" role="group" aria-label="Pruebas que da la partida">
+        <button type="button" data-n="3" aria-pressed="true">3</button><button type="button" data-n="2" aria-pressed="false">2</button><button type="button" data-n="1" aria-pressed="false">1</button><button type="button" data-n="0" aria-pressed="false">0</button>
+      </div>
+      <div class="room" id="room">
+        <span class="lbl">Partida con amigos</span>
+        <div class="roomrow" id="roomoff">
+          <button type="button" class="sharebtn" id="rcreate"><span class="dot"></span>Crear partida</button>
+          <form class="join" id="rjoin"><input id="rcode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Código" aria-label="Código de 4 dígitos" autocomplete="off"><button type="submit" class="sharebtn">Unirme</button></form>
+        </div>
+        <div class="roomrow" id="roomon" hidden>
+          <span class="code" id="rshow">0000</span>
+          <span class="live"><span class="dot"></span>En vivo</span>
+          <button type="button" class="sharebtn" id="rleave">Salir</button>
+        </div>
+        <p class="sharemsg" id="sharemsg"></p>
+      </div>
+    </div>
   </section>
 
   <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="q" placeholder="Buscar fantasma por nombre…" autocomplete="off" aria-label="Buscar fantasma por nombre"></label>
+  </div>
 
+  <div class="main">
   <section aria-live="polite">
     <p class="count" id="count"></p>
   </section>
   <div class="list" id="list"></div>
+  <div class="descart" id="descart"></div>
+  </div>
+  </div>
+
+  <div class="view" id="view-hr" hidden>
+    <section class="panel timer" aria-labelledby="h-sm">
+      <div class="panel-head"><h2 id="h-sm">Temporizador de incienso</h2></div>
+      <p class="note">Usa el incienso cerca del fantasma (fuera de una cacería) y toca «Usé incienso». Si empieza a cazar, toca «¡Está cazando!» y te digo qué fantasmas encajan.</p>
+      <div class="clock" id="smclock">0:00</div>
+      <div class="bar" id="smbar"><div class="fill" id="smfill"></div></div>
+      <div class="btns"><button class="btn" id="smgo" type="button">Usé incienso</button><button class="btn alt" id="smhunt" type="button" disabled>¡Está cazando!</button><button class="btn alt" id="smrst" type="button">Reiniciar</button></div>
+      <p class="verdict" id="smv"></p>
+    </section>
+
+    <section class="panel timer" aria-labelledby="h-cd">
+      <div class="panel-head"><h2 id="h-cd">Tiempo entre cacerías</h2></div>
+      <p class="note">Toca cuando termine una cacería. Si vuelve a cazar antes de 25 segundos, es Demonio.</p>
+      <div class="clock" id="cdclock">0:00</div>
+      <div class="btns"><button class="btn" id="cdgo" type="button">Terminó la cacería</button><button class="btn alt" id="cdhunt" type="button" disabled>¡Cazó otra vez!</button></div>
+      <p class="verdict" id="cdv"></p>
+    </section>
+
+    <section class="panel timer" aria-labelledby="h-sp">
+      <div class="panel-head"><h2 id="h-sp">Medidor de velocidad por pasos</h2></div>
+      <p class="note">Durante una cacería, toca el recuadro al ritmo de cada paso que oigas (mínimo 5 toques). Es una estimación: sirve para saber si es lento, normal o rápido.</p>
+      <button class="tap" id="tap" type="button">Toca con cada paso</button>
+      <div class="big"><span class="deg" id="spv">—</span><span class="sub" id="spbpm">pasos por minuto</span></div>
+      <p class="verdict" id="spres"></p>
+      <div class="btns"><button class="btn alt" id="sprst" type="button">Borrar toques</button></div>
+    </section>
+  </div>
+
+  <div class="view" id="view-ob" hidden>
+    <section class="panel">
+      <div class="panel-head"><h2>Objetos malditos</h2></div>
+      <p class="note">En cada contrato hay uno al azar (no aparecen en Locura). Si los usas, empieza la partida aunque estés preparando. Sus cacerías malditas pueden empezar con 100% de cordura y casi no te dan tiempo de esconderte. Solo un crucifijo de nivel III con sus dos usos puede frenarlas.</p>
+    </section>
+    <div class="cards" id="obcards"></div>
+    <section class="panel">
+      <div class="panel-head"><h2>Cartas del tarot</h2></div>
+      <div class="cardtbl"><table class="tiers tarot" id="tarot"></table></div>
+      <p class="note">El mazo trae 10 cartas y desaparece cuando se acaba. Durante una cacería, El Loco siempre sale.</p>
+    </section>
+  </div>
+
+  <div class="view" id="view-eq" hidden>
+    <section class="panel">
+      <div class="panel-head"><h2>Equipo por nivel</h2></div>
+      <div class="cardtbl"><table class="tiers eq" id="tiers"></table></div>
+      <p class="note">Mientras más alto el nivel, más alcance y más rápido funciona. Se desbloquean subiendo de nivel y se compran en la tienda del camión.</p>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Mapas y qué llevar</h2></div>
+      <div class="cards" id="mapas"></div>
+      <p class="note">Próximamente: dónde está la caja de fusibles y los mejores escondites de cada mapa.</p>
+    </section>
   </div>
 
   <div class="view" id="view-wx" hidden>
@@ -167,10 +327,10 @@ footer{font-size:.78rem;color:var(--muted)}
         <li><b>Prueba de Temperaturas heladas:</b> el termómetro debe marcar <b>menos de 0 °C (32 °F)</b>.</li>
         <li><b>Fantasma sin Heladas:</b> su cuarto baja como mínimo a <b>1 °C (33.8 °F)</b>. Nunca llega a cero.</li>
         <li><b>Fantasma con Heladas:</b> puede bajar su cuarto hasta <b>−10 °C (14 °F)</b>.</li>
-        <li><b>Calefacción:</b> con el cuadro eléctrico encendido, los cuartos interiores suben poco a poco hasta <b>20 °C (68 °F)</b>, que es lo más caliente que se ponen. Con el cuadro apagado vuelven a la temperatura del clima.</li>
+        <li><b>Calefacción:</b> con la caja de fusibles encendida, los cuartos interiores suben poco a poco hasta <b>20 °C (68 °F)</b>, que es lo más caliente que se ponen. Con la caja de fusibles apagada vuelven a la temperatura del clima.</li>
         <li><b>Tu aliento:</b> lo ves en cualquier cuarto a <b>5 °C (41 °F) o menos</b>, así que no siempre indica el cuarto del fantasma.</li>
         <li><b>Margen del termómetro:</b> los de nivel I y II pueden marcar hasta 3 °C de más, y el de nivel III hasta 2 °C de más. Un 2 °C puede ser realmente un 0 °C: espera un poco y vuelve a medir.</li>
-        <li>El cuarto del fantasma se enfría aunque el cuadro esté encendido, y vuelve a calentarse cuando el fantasma se va.</li>
+        <li>El cuarto del fantasma se enfría aunque la caja de fusibles esté encendida, y vuelve a calentarse cuando el fantasma se va.</li>
       </ul>
     </section>
 
@@ -225,7 +385,7 @@ const G = [
   que:"El fantasma más agresivo de todos.",
   fuerza:"Caza más seguido y mucho antes que los demás.",
   debil:"Le tiene más miedo al crucifijo: le afecta desde más lejos.",
-  p:["Puede empezar a cazar con la cordura muy alta.","Solo espera 20 s entre una cacería y la siguiente.","El sahumerio lo frena solo 60 s (a otros, 90 s).","Hace muchos eventos y cacerías en poco tiempo.","Los demás fantasmas esperan unos 25 s entre cacerías."],
+  p:["Puede empezar a cazar con la cordura muy alta.","Solo espera 20 s entre una cacería y la siguiente.","El incienso lo frena solo 60 s (a otros, 90 s).","Hace muchos eventos y cacerías en poco tiempo.","Los demás fantasmas esperan unos 25 s entre cacerías."],
   tip:"Pon un crucifijo en su cuarto desde el inicio. Si caza con el equipo casi al 100%, es Demonio."},
  {n:"Deogen",en:"Deogen",ev:["caja","esc","dots"],vel:"3 m/s lejos / 0.4 cerca",caza:"40%",
   que:"Un espíritu que siempre sabe dónde están los vivos.",
@@ -235,10 +395,10 @@ const G = [
   tip:"No te escondas. Cuando esté cerca, camina en círculos alrededor de una mesa o mueble."},
  {n:"Gallu",en:"Gallu",ev:["emf","uv","caja"],vel:"1.36 a 1.96 m/s",caza:"40% / 50% / 60%",
   que:"Otra forma de demonio que odia el equipo de protección.",
-  fuerza:"El crucifijo, el sahumerio y la sal lo enfurecen y lo hacen más peligroso.",
+  fuerza:"El crucifijo, el incienso y la sal lo enfurecen y lo hacen más peligroso.",
   debil:"Estar enfurecido lo agota: después queda debilitado y el equipo funciona mejor contra él.",
-  p:["Tiene tres estados: normal, enfurecido y debilitado.","Enfurecido: más rápido, caza al 60%, el crucifijo alcanza menos y no pisa la sal.","Debilitado: más lento, caza al 40% y el sahumerio lo ciega 7.5 s en la cacería (a otros, 5 s).","Su velocidad cambia de una cacería a otra."],
-  tip:"Si después de usar sahumerio o crucifijo se vuelve más rápido, es Gallu."},
+  p:["Tiene tres estados: normal, enfurecido y debilitado.","Enfurecido: más rápido, caza al 60%, el crucifijo alcanza menos y no pisa la sal.","Debilitado: más lento, caza al 40% y el incienso lo ciega 7.5 s en la cacería (a otros, 5 s).","Su velocidad cambia de una cacería a otra."],
+  tip:"Si después de usar incienso o crucifijo se vuelve más rápido, es Gallu."},
  {n:"Goryo",en:"Goryo",ev:["emf","uv","dots"],vel:"normal",caza:"50%",
   que:"Un espíritu atado a su lugar que solo se deja ver por cámara.",
   fuerza:"Casi nunca se le ve directamente.",
@@ -249,14 +409,14 @@ const G = [
   que:"Un espíritu raro que se fortalece con el frío.",
   fuerza:"En cuartos helados se mueve muy rápido.",
   debil:"En cuartos calientes se vuelve lento.",
-  p:["Nunca enciende el cuadro eléctrico y lo apaga seguido.","Con el cuadro apagado, se le ve aliento helado al cazar.","Su velocidad cambia según la temperatura del cuarto donde pasa.","No acelera cuando te ve.","En Pesadilla, Temperaturas heladas siempre es una de sus pruebas."],
-  tip:"Mantén el cuadro eléctrico encendido para que la casa no se enfríe."},
+  p:["Nunca enciende la caja de fusibles y la apaga seguido.","Con la caja de fusibles apagada, se le ve aliento helado al cazar.","Su velocidad cambia según la temperatura del cuarto donde pasa.","No acelera cuando te ve.","En Pesadilla, Temperaturas heladas siempre es una de sus pruebas."],
+  tip:"Mantén la caja de fusibles encendida para que la casa no se enfríe."},
  {n:"Jinn",en:"Jinn",ev:["emf","uv","frio"],vel:"2.5 m/s si te ve de lejos",caza:"50%",
   que:"Un espíritu territorial que se alimenta de la electricidad.",
   fuerza:"Con la luz encendida, va rápido hacia ti si te ve de lejos.",
-  debil:"Si apagas el cuadro eléctrico, pierde sus habilidades.",
-  p:["Nunca apaga el cuadro eléctrico por sí mismo.","Cerca del cuadro puede quitarte 25% de cordura de golpe (deja EMF en el cuadro).","Va rápido de lejos y normal cuando está cerca.","Si el medidor EMF junto al cuadro eléctrico suena sin que se apague la luz, usó su habilidad."],
-  tip:"Apaga el cuadro eléctrico: si en ninguna partida lo apaga él, piensa en Jinn."},
+  debil:"Si apagas la caja de fusibles, pierde sus habilidades.",
+  p:["Nunca apaga la caja de fusibles por sí mismo.","Cerca de la caja de fusibles puede quitarte 25% de cordura de golpe (deja EMF en el cuadro).","Va rápido de lejos y normal cuando está cerca.","Si el medidor EMF junto a la caja de fusibles suena sin que se apague la luz, usó su habilidad."],
+  tip:"Apaga la caja de fusibles: si nunca la apaga él, piensa en Jinn."},
  {n:"Kormos",en:"Kormos",ev:["orbes","caja","uv"],vel:"2.21 m/s hacia el ruido",caza:"50% (70% si corres cerca)",
   que:"Un fantasma ciego que caza solo con el oído.",
   fuerza:"Oye tus pasos desde muy lejos, sobre todo si corres.",
@@ -272,7 +432,7 @@ const G = [
  {n:"Moroi",en:"Moroi",ev:["caja","esc","frio"],vel:"más rápido con poca cordura",caza:"50%",
   que:"Un espíritu que maldice a los vivos y se alimenta de su cordura.",
   fuerza:"Mientras más baja la cordura del equipo, más rápido caza.",
-  debil:"Las pastillas de cordura quitan su maldición, y el sahumerio lo ciega más tiempo.",
+  debil:"Las pastillas de cordura quitan su maldición, y el incienso lo ciega más tiempo.",
   p:["Maldice a quien lo escucha por la caja espectral o el micrófono parabólico.","La maldición hace que pierdas cordura el doble de rápido, aunque estés en la luz.","Puede ser de los fantasmas más rápidos con el equipo casi sin cordura.","La maldición deja de bajarte cordura mientras estés fuera de la casa.","En Pesadilla, Caja espectral siempre es una de sus pruebas."],
   tip:"Si tu cordura baja muy rápido después de hablar por la caja espectral, toma pastillas: puede ser Moroi."},
  {n:"Myling",en:"Myling",ev:["emf","uv","esc"],vel:"normal",caza:"50%",
@@ -321,7 +481,7 @@ const G = [
   que:"Un demonio que se alimenta de la electricidad.",
   fuerza:"Cerca de aparatos encendidos es más rápido y caza antes.",
   debil:"Sin aparatos cerca vuelve a ser un fantasma normal.",
-  p:["Interfiere con linternas, aparatos y el chat de voz desde 15 m (otros, 10 m).","Se acelera si hay equipo encendido en su piso cerca de él.","Le afectan: cámaras en trípode, aparatos encendidos y sensores colocados.","No le afectan: las luces de la casa, el cuadro eléctrico, aparatos apagados ni cámaras tiradas en el piso."],
+  p:["Interfiere con linternas, aparatos y el chat de voz desde 15 m (otros, 10 m).","Se acelera si hay equipo encendido en su piso cerca de él.","Le afectan: cámaras en trípode, aparatos encendidos y sensores colocados.","No le afectan: las luces de la casa, la caja de fusibles, aparatos apagados ni cámaras tiradas en el piso."],
   tip:"Apaga tu equipo en la cacería. Si los aparatos fallan desde muy lejos, es Raiju."},
  {n:"Revenant",en:"Revenant",ev:["orbes","esc","frio"],vel:"1 m/s / 3 m/s al verte",caza:"50%",
   que:"Un fantasma lento y violento que se vuelve rapidísimo al ver a su presa.",
@@ -338,9 +498,9 @@ const G = [
  {n:"Espíritu",en:"Spirit",ev:["emf","caja","esc"],vel:"normal",caza:"50%",
   que:"El fantasma más común; no tiene trucos especiales.",
   fuerza:"Ninguna.",
-  debil:"El sahumerio le impide cazar 3 minutos (a otros, 90 s).",
-  p:["Se comporta como un fantasma promedio.","Después del sahumerio tarda 3 minutos en poder volver a cazar (otros, 90 s; el Demonio, 60 s)."],
-  tip:"Deja que la cordura baje del 25% para que cace seguido. Cuando empiece a cazar, usa sahumerio cerca de él y cuenta: si tarda 3 minutos en volver a cazar, es Espíritu."},
+  debil:"El incienso le impide cazar 3 minutos (a otros, 90 s).",
+  p:["Se comporta como un fantasma promedio.","Después del incienso tarda 3 minutos en poder volver a cazar (otros, 90 s; el Demonio, 60 s)."],
+  tip:"Deja que la cordura baje del 25% para que cace seguido. Cuando empiece a cazar, usa incienso cerca de él y cuenta: si tarda 3 minutos en volver a cazar, es Espíritu."},
  {n:"Thaye",en:"Thaye",ev:["orbes","esc","dots"],vel:"2.75 bajando a 1 m/s",caza:"75% bajando a 15%",
   que:"Un espíritu que envejece rápido cuando los vivos están cerca.",
   fuerza:"De joven es muy activo, rápido y caza pronto.",
@@ -374,18 +534,29 @@ const G = [
  {n:"Yurei",en:"Yurei",ev:["orbes","frio","dots"],vel:"normal",caza:"50%",
   que:"Un espíritu que regresó con sed de venganza y ataca la mente.",
   fuerza:"Baja mucho la cordura de los que están cerca.",
-  debil:"El sahumerio lo deja atrapado en su cuarto.",
-  p:["Puede cerrar una puerta de golpe y bajar 15% de cordura a los cercanos.","Es el único que mueve la puerta principal fuera de una cacería.","Abre o cierra puertas por completo, no a medias.","El sahumerio lo encierra 90 s en su habitación."],
+  debil:"El incienso lo deja atrapado en su cuarto.",
+  p:["Puede cerrar una puerta de golpe y bajar 15% de cordura a los cercanos.","Es el único que mueve la puerta principal fuera de una cacería.","Abre o cierra puertas por completo, no a medias.","El incienso lo encierra 90 s en su habitación."],
   tip:"Si la puerta principal se mueve sola sin que haya cacería, es Yurei."}
 ];
 
 const state = {}; EV.forEach(e=>state[e.k]=0);
+let dif = 3;                 // pruebas que da la partida
+const desc = new Set();      // fantasmas descartados a mano (por nombre en inglés)
+// Con menos de 3 pruebas, estos fantasmas siempre muestran esta prueba
+const FORCED = {"Obake":"uv","Hantu":"frio","Deogen":"caja","Moroi":"caja","Goryo":"dots"};
 
 // El Mímico siempre muestra orbes además de sus 3 pruebas
 const shows = g => g.fake ? [...g.ev, g.fake] : g.ev;
 const matches = g => {
   const s = shows(g);
-  return EV.every(e => state[e.k]===1 ? s.includes(e.k) : state[e.k]===2 ? !s.includes(e.k) : true);
+  const found = EV.filter(e=>state[e.k]===1).map(e=>e.k);
+  const out = EV.filter(e=>state[e.k]===2).map(e=>e.k);
+  if (!found.every(k=>s.includes(k))) return false;
+  if (found.filter(k=>g.ev.includes(k)).length > dif) return false;
+  if (dif===3) return !out.some(k=>s.includes(k));
+  if (g.fake && out.includes(g.fake)) return false;          // el Mímico siempre da orbes
+  if (dif>0 && FORCED[g.en] && out.includes(FORCED[g.en])) return false;
+  return out.filter(k=>g.ev.includes(k)).length <= 3-dif;    // alguna prueba puede estar oculta
 };
 
 const evsEl = document.getElementById("evs");
@@ -393,13 +564,17 @@ EV.forEach(e=>{
   const b = document.createElement("button");
   b.type="button"; b.className="ev"; b.id="ev-"+e.k; b.dataset.k=e.k; b.dataset.s="0";
   b.innerHTML = `<span class="box" aria-hidden="true"></span><span class="t">${e.n}</span>`;
-  b.addEventListener("click",()=>{ state[e.k]=(state[e.k]+1)%3; render(); });
+  b.addEventListener("click",()=>{ state[e.k]=(state[e.k]+1)%3; render(); pushShared(); });
   evsEl.appendChild(b);
 });
-document.getElementById("reset").addEventListener("click",()=>{ EV.forEach(e=>state[e.k]=0); render(); });
+document.getElementById("reset").addEventListener("click",()=>{ EV.forEach(e=>state[e.k]=0); desc.clear(); render(); pushShared(); });
+document.querySelectorAll("#dif button").forEach(b=>b.addEventListener("click",()=>{ dif=+b.dataset.n; render(); pushShared(); }));
 
 function render(){
-  const list = G.filter(matches);
+  const all = G.filter(matches);
+  const list = all.filter(g=>!desc.has(g.en));
+  const gone = all.filter(g=>desc.has(g.en));
+  document.querySelectorAll("#dif button").forEach(b=>b.setAttribute("aria-pressed", +b.dataset.n===dif));
   EV.forEach(e=>{
     const b = document.getElementById("ev-"+e.k), s = state[e.k];
     b.dataset.s = s;
@@ -414,6 +589,8 @@ function render(){
     c===1 ? (q ? "<b>"+shown[0].n+"</b>" : "¡Es <b>"+shown[0].n+"</b>!") : "<b>"+c+"</b> fantasmas posibles";
   const L = document.getElementById("list");
   const open = new Set([...L.querySelectorAll("details[open]")].map(d=>d.dataset.n));
+  const D = document.getElementById("descart");
+  D.innerHTML = gone.length ? `<h3>Descartados por ti (${gone.length})</h3>` + gone.map(g=>`<div class="drow"><s>${g.n}</s><button type="button" data-undo="${g.en}">Restaurar</button></div>`).join("") : "";
   if(!c){ L.innerHTML = q ? '<div class="none">Ningún fantasma con ese nombre'+(list.length<G.length?' entre los que coinciden con tus pruebas':'')+'.</div>' : '<div class="none">Revisa las pruebas marcadas: alguna combinación no existe.</div>'; return; }
   L.innerHTML = shown.map(g=>{
     const tags = g.ev.map(k=>`<span class="tag${state[k]===1?" hit":""}">${SHORT[k]}</span>`).join("")
@@ -425,15 +602,18 @@ function render(){
         <div class="stats"><span class="stat">Velocidad: <b>${g.vel}</b></span><span class="stat">Caza con cordura: <b>${g.caza}</b></span></div>
         <div><span class="lbl">Pistas</span><ul>${g.p.map(x=>`<li>${x}</li>`).join("")}</ul></div>
         <div class="tip"><strong>Cómo reconocerlo:</strong> ${g.tip}</div>
+        <button type="button" class="dsc" data-out="${g.en}">✗ Descartar este fantasma</button>
       </div></details>`;
   }).join("");
 }
 function norm(t){return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
 document.getElementById("q").addEventListener("input",render);
+document.getElementById("list").addEventListener("click",e=>{const b=e.target.closest("[data-out]"); if(!b) return; desc.add(b.dataset.out); render(); pushShared();});
+document.getElementById("descart").addEventListener("click",e=>{const b=e.target.closest("[data-undo]"); if(!b) return; desc.delete(b.dataset.undo); render(); pushShared();});
 render();
 
 // ---- Pestañas
-const tabs=[["tab-ev","view-ev"],["tab-wx","view-wx"]];
+const tabs=[["tab-ev","view-ev"],["tab-wx","view-wx"],["tab-hr","view-hr"],["tab-ob","view-ob"],["tab-eq","view-eq"]];
 tabs.forEach(([t,v])=>document.getElementById(t).addEventListener("click",()=>{
   tabs.forEach(([t2,v2])=>{const on=t2===t;document.getElementById(t2).setAttribute("aria-selected",on);document.getElementById(v2).hidden=!on;});
 }));
@@ -482,7 +662,7 @@ renderWx();
 const FZ={
  "Asuang":"Cuarto helado; caza lento y acelera muy rápido al verte.",
  "Demonio":"Cuarto helado y cacerías muy seguidas.",
- "Hantu":"Más rápido mientras más frío esté el cuarto (máximo bajo 0 °C, mínimo arriba de 15 °C). Con el cuadro apagado echa aliento helado al cazar.",
+ "Hantu":"Más rápido mientras más frío esté el cuarto (máximo bajo 0 °C, mínimo arriba de 15 °C). Con la caja de fusibles apagada echa aliento helado al cazar.",
  "Jinn":"Con el cuadro encendido la casa se calienta, pero su cuarto sigue helado.",
  "Moroi":"Cuarto helado; maldice por la caja espectral.",
  "Oni":"Cuarto helado y muy activo con gente cerca.",
@@ -494,6 +674,170 @@ const FZ={
  "Yurei":"Cuarto helado; cierra puertas de golpe."
 };
 document.getElementById("ftable").innerHTML=G.filter(g=>g.ev.includes("frio")).map(g=>`<tr><td>${g.n}</td><td>${FZ[g.n]||""}</td></tr>`).join("");
+
+// ---- Partida con amigos: código de 4 dígitos, todos ven y marcan lo mismo (Supabase)
+const SB = "https://aqejoebvdpszpxtahgvu.supabase.co/rest/v1/partidas";
+const SBK = "sb_publishable_3UCVdkXQ388XOK_feA4CFQ_WUVq1Ekq";
+const SBH = {apikey:SBK, Authorization:"Bearer "+SBK, "Content-Type":"application/json"};
+const shareMsg = document.getElementById("sharemsg");
+let room = null, seen = "", busy = 0, quietUntil = 0, poll = 0, applying = false, wTimer = 0;
+const LSK = "phasmo-partida";
+function sharedState(){ return {ev:{...state}, dif, desc:[...desc]}; }
+function applyState(d){
+  if(!d) return; applying = true;
+  EV.forEach(e=>state[e.k] = (d.ev && [0,1,2].includes(+d.ev[e.k])) ? +d.ev[e.k] : 0);
+  dif = [0,1,2,3].includes(+d.dif) ? +d.dif : 3;
+  desc.clear(); (Array.isArray(d.desc)?d.desc:[]).forEach(x=>{ if(G.some(g=>g.en===x)) desc.add(x); });
+  render(); applying = false;
+}
+async function sbGet(code){
+  const r = await fetch(SB+"?codigo=eq."+code+"&select=data,updated_at", {headers:SBH, cache:"no-store"});
+  if(!r.ok) throw new Error(r.status); const j = await r.json(); return j[0] || null;
+}
+async function sbPut(code, data){
+  const updated_at = new Date().toISOString();
+  const r = await fetch(SB+"?on_conflict=codigo", {method:"POST", headers:{...SBH, Prefer:"resolution=merge-duplicates,return=minimal"}, body:JSON.stringify([{codigo:code, data, updated_at}])});
+  if(!r.ok) throw new Error(r.status); return updated_at;
+}
+function pushShared(){
+  if(!room || applying) return;
+  quietUntil = Date.now()+1500;
+  clearTimeout(wTimer);
+  wTimer = setTimeout(async()=>{ busy++; try{ seen = await sbPut(room, sharedState()); shareMsg.textContent=""; }catch(e){ shareMsg.textContent="No se pudo guardar el cambio. Revisa tu internet."; } busy--; }, 250);
+}
+async function tick(){
+  if(!room || document.hidden || busy || Date.now()<quietUntil) return;
+  try{ const row = await sbGet(room); if(row && row.updated_at!==seen && !busy && Date.now()>=quietUntil){ seen=row.updated_at; applyState(row.data); } }catch(e){}
+}
+function showRoom(){
+  document.getElementById("roomoff").hidden = !!room;
+  document.getElementById("roomon").hidden = !room;
+  if(room) document.getElementById("rshow").textContent = room;
+  try{ room ? localStorage.setItem(LSK, room) : localStorage.removeItem(LSK); }catch(e){}
+  clearInterval(poll); if(room) poll = setInterval(tick, 2000);
+}
+document.getElementById("rcreate").addEventListener("click", async()=>{
+  shareMsg.textContent = "Creando partida…";
+  try{
+    for(let i=0;i<8;i++){
+      const code = String(Math.floor(Math.random()*10000)).padStart(4,"0");
+      const row = await sbGet(code);
+      if(row && Date.now()-Date.parse(row.updated_at) < 12*3600e3) continue; // ocupado por otra partida reciente
+      seen = await sbPut(code, sharedState()); room = code; showRoom();
+      shareMsg.textContent = "Pásales este código a tus amigos. Todos pueden marcar y ven lo mismo en vivo.";
+      return;
+    }
+    shareMsg.textContent = "No encontré un código libre. Intenta otra vez.";
+  }catch(e){ shareMsg.textContent = "No se pudo conectar con la partida. Ábrela desde ingler.me/phasmophobia."; }
+});
+document.getElementById("rjoin").addEventListener("submit", async ev=>{
+  ev.preventDefault();
+  const code = document.getElementById("rcode").value.replace(/\D/g,"");
+  if(code.length!==4){ shareMsg.textContent = "El código tiene 4 números."; return; }
+  shareMsg.textContent = "Buscando partida…";
+  try{
+    const row = await sbGet(code);
+    if(!row){ shareMsg.textContent = "No existe una partida con el código "+code+"."; return; }
+    room = code; seen = row.updated_at; applyState(row.data); showRoom(); shareMsg.textContent = "";
+    document.getElementById("rcode").value = "";
+  }catch(e){ shareMsg.textContent = "No se pudo conectar con la partida. Ábrela desde ingler.me/phasmophobia."; }
+});
+document.getElementById("rleave").addEventListener("click",()=>{ room=null; showRoom(); shareMsg.textContent="Saliste de la partida. Lo marcado se queda solo en tu pantalla."; });
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden) tick(); });
+try{ const saved = localStorage.getItem(LSK); if(saved && /^\d{4}$/.test(saved)){ sbGet(saved).then(row=>{ if(row){ room=saved; seen=row.updated_at; applyState(row.data); showRoom(); } }).catch(()=>{}); } }catch(e){}
+
+// ---- Temporizador de incienso
+const fmt = t => Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
+const SM_MAX = 200;
+let smT0 = 0, smIv = 0;
+document.getElementById("smbar").insertAdjacentHTML("beforeend",
+  [[60,"60 s<br>Demonio"],[90,"90 s<br>normal"],[180,"180 s<br>Espíritu"]].map(([t,l])=>`<div class="bm" style="left:${t/SM_MAX*100}%"><span>${l}</span></div>`).join(""));
+function smTick(){
+  const t = (Date.now()-smT0)/1000;
+  document.getElementById("smclock").textContent = fmt(t);
+  document.getElementById("smfill").style.width = Math.min(100, t/SM_MAX*100)+"%";
+  document.getElementById("smv").textContent = t<60 ? "Ningún fantasma puede cazar todavía (salvo cacerías malditas)." : t<90 ? "Si caza ahora, es Demonio." : t<180 ? "Si caza ahora, NO es Espíritu." : "Ya cualquier fantasma puede cazar.";
+}
+document.getElementById("smgo").addEventListener("click",()=>{ clearInterval(smIv); smT0=Date.now(); smIv=setInterval(smTick,250); smTick(); document.getElementById("smhunt").disabled=false; });
+document.getElementById("smhunt").addEventListener("click",()=>{
+  clearInterval(smIv); const t=(Date.now()-smT0)/1000; document.getElementById("smhunt").disabled=true;
+  document.getElementById("smv").innerHTML = `Cazó a los <b>${Math.round(t)} s</b>. ` + (t<60 ? "Demasiado pronto: pudo ser una cacería maldita o el incienso no le dio." : t<90 ? "Solo el <b>Demonio</b> caza tan pronto." : t<180 ? "Descarta al <b>Espíritu</b> (él espera 3 minutos)." : "No descarta a nadie.");
+});
+document.getElementById("smrst").addEventListener("click",()=>{ clearInterval(smIv); document.getElementById("smclock").textContent="0:00"; document.getElementById("smfill").style.width="0"; document.getElementById("smv").textContent=""; document.getElementById("smhunt").disabled=true; });
+
+// ---- Tiempo entre cacerías
+let cdT0=0, cdIv=0;
+document.getElementById("cdgo").addEventListener("click",()=>{ clearInterval(cdIv); cdT0=Date.now(); cdIv=setInterval(()=>{ document.getElementById("cdclock").textContent=fmt((Date.now()-cdT0)/1000); },250); document.getElementById("cdhunt").disabled=false; document.getElementById("cdv").textContent=""; });
+document.getElementById("cdhunt").addEventListener("click",()=>{ clearInterval(cdIv); const t=(Date.now()-cdT0)/1000; document.getElementById("cdhunt").disabled=true;
+  document.getElementById("cdv").innerHTML = `Volvió a cazar a los <b>${Math.round(t)} s</b>. ` + (t<25 ? "Solo el <b>Demonio</b> caza tan seguido (20 s)." : "Tiempo normal: no descarta a nadie."); });
+
+// ---- Medidor de velocidad por pasos (estimación: ~130 pasos/min ≈ 1.7 m/s, velocidad normal)
+const K = 1.7/130; let taps = [];
+const SLOW = ["Revenant (escondido, 1 m/s)","Thaye viejo (1 m/s)","Dayan si te quedas quieto (1.2)","Gallu debilitado (1.36)","Hantu en cuartos calientes (1.4)","Obambo calmado (1.45)","Gemelo lento (1.5)","Deogen cuando está cerca (0.4)"];
+const FAST = ["Revenant al verte (3 m/s)","Deogen de lejos (3)","Deildegast al inicio (hasta 3)","Thaye joven (2.75)","Hantu en el frío (2.7)","Jinn con la luz encendida (2.5)","Raiju cerca de aparatos (2.5)","Dayan si te mueves (2.25)","Kormos hacia el ruido (2.21)","Obambo / Gallu enfurecido (1.96)","Gemelo rápido (1.9)","Moroi con poca cordura"];
+document.getElementById("tap").addEventListener("pointerdown",e=>{
+  e.preventDefault(); const now=performance.now();
+  if(taps.length && now-taps[taps.length-1]>2500) taps=[];
+  taps.push(now); if(taps.length>10) taps.shift();
+  if(taps.length<5){ document.getElementById("spv").textContent="…"; document.getElementById("spres").textContent=`Sigue tocando (${taps.length}/5)`; return; }
+  const avg=(taps[taps.length-1]-taps[0])/(taps.length-1), bpm=60000/avg, ms=bpm*K;
+  document.getElementById("spv").textContent="≈ "+ms.toFixed(1)+" m/s";
+  document.getElementById("spbpm").textContent=Math.round(bpm)+" pasos por minuto";
+  document.getElementById("spres").innerHTML = ms<1.5 ? "<b>Lento.</b> Puede ser: "+SLOW.join(", ")+"." : ms<=1.95 ? "<b>Normal.</b> Ojo: casi todos aceleran poco a poco mientras te ven (hasta ~2.8 m/s). Si NO acelera al verte, piensa en Deildegast, Hantu, Thaye o Kormos." : "<b>Rápido.</b> Puede ser: "+FAST.join(", ")+".";
+});
+document.getElementById("sprst").addEventListener("click",()=>{ taps=[]; document.getElementById("spv").textContent="—"; document.getElementById("spbpm").textContent="pasos por minuto"; document.getElementById("spres").textContent=""; });
+
+// ---- Objetos malditos
+const OB = [
+ {n:"Tablero de ouija", d:"Le haces preguntas al fantasma escribiendo o hablando cerca del tablero.",
+  l:["¿Dónde estás? (su cuarto): cuesta 50% de cordura.","¿Dónde está el hueso? / ¿Estoy cerca del hueso?: 20%.","Edad, cómo murió o tu cordura: 5%.","Cada respuesta puede dar EMF 5 si es su prueba (1 de cada 3): ten el medidor cerca."],
+  w:"Nunca preguntes por jugar a las escondidas. Si no te alcanza la cordura o lo dejas activo y te alejas más de 5 m, se rompe y empieza una cacería maldita.", ok:"Di «adiós» para apagarlo."},
+ {n:"Caja de música", d:"Toca una melodía y el fantasma canta junto a ella.",
+  l:["A menos de 20 m del fantasma, lo oyes cantar y sabes dónde está.","A menos de 5 m, aparece y camina hacia la caja.","Estar a menos de 3 m mientras suena te quita cordura (unos 2.6% por segundo)."],
+  w:"Empieza una cacería si el fantasma toca la caja, si camina más de 5 s durante la canción, si lanzas la caja o si tu cordura llega a 0.", ok:"Úsala para encontrar su cuarto y aléjate apenas lo veas."},
+ {n:"Espejo embrujado", d:"Muestra en vivo la habitación favorita del fantasma.",
+  l:["Cuesta 7.5% de cordura por segundo, mínimo 20% cada vez.","Truco: deja equipo en el cuarto sospechoso y búscalo en el reflejo."],
+  w:"Se rompe y empieza una cacería si tu cordura llega a 0 mientras miras o si lo usas con menos de 20%.", ok:"Míralo solo un segundo, lo justo para reconocer el cuarto."},
+ {n:"Muñeco vudú", d:"Cada uso clava un alfiler al azar y obliga al fantasma a interactuar.",
+  l:["Cuesta 5% de cordura por alfiler.","Puede provocar EMF 5 y huellas UV, pero no escritura.","El alfiler del corazón cuesta 10% y empieza una cacería."],
+  w:"Con 0% de cordura se clavan todos los alfileres de golpe: cacería y objetos volando.", ok:"Úsalo con la cordura alta para forzar pruebas."},
+ {n:"Pata de mono", d:"Te concede deseos (5 en dificultades normales, menos en las altas), siempre con un castigo.",
+  l:["Seguridad: abre el escondite tapado más cercano, pero rompe las luces y el fantasma te oye desde cualquier lado.","Salir: abre las puertas de salida (incluso en cacería), pero te vuelves más lento un rato.","Información: quita una prueba falsa del diario, pero el fantasma se teletransporta a ti, empieza una cacería maldita y ves y oyes mal el resto de la partida.","Clima: puede enfriar el mapa (útil contra el Hantu)."],
+  w:"El castigo solo lo sufre quien pide el deseo.", ok:"El deseo de Salir puede salvarte en una cacería."},
+ {n:"Círculo de invocación", d:"Cinco velas rojas en el piso que invocan al fantasma.",
+  l:["Necesitas encendedor o vela. Cada vela cuesta 16% de cordura (80% si las prendes solo).","Al prender la quinta, el fantasma aparece quieto e inofensivo 5 segundos: momento perfecto para la foto.","Después empieza una cacería maldita sin tiempo para esconderte."],
+  w:"Con menos de 16% de cordura, la última vela provoca una cacería inmediata.", ok:"Repartan las velas entre varios y tengan un crucifijo de nivel III cerca: cancela esa cacería."},
+ {n:"Cartas del tarot", d:"Un mazo de 10 cartas al azar; cada una tiene un efecto distinto (tabla de abajo).",
+  l:["Más o menos 1 de cada 3 mazos no trae la Muerte.","Úsalas con la cordura alta: la Luna te deja en 0."],
+  w:"La Muerte provoca una cacería maldita y el Ahorcado te mata al instante (1%).", ok:"El Sol te devuelve al 100% de cordura y la Sacerdotisa revive a un compañero."}
+];
+document.getElementById("obcards").innerHTML = OB.map(o=>`<article class="card"><h3>${o.n}</h3><p>${o.d}</p><ul>${o.l.map(x=>`<li>${x}</li>`).join("")}</ul><div class="warn"><b>Peligro:</b> ${o.w}</div><div class="ok"><b>Consejo:</b> ${o.ok}</div></article>`).join("");
+const TAROT = [["La Torre","Duplica la actividad del fantasma 20 s","20%"],["La Rueda de la Fortuna","+25% o −25% de cordura","20%"],["El Loco","Parece otra carta, pero no hace nada","17%"],["El Diablo","Evento del fantasma hacia el jugador más cercano","10%"],["La Muerte","Cacería maldita inmediata","10%"],["El Ermitaño","Manda al fantasma a su cuarto 1 minuto","10%"],["El Sol","Cordura al 100%","5%"],["La Luna","Cordura a 0%","5%"],["La Sacerdotisa","Revive a un jugador muerto (o al próximo que muera)","2%"],["El Ahorcado","Mueres al instante","1%"]];
+document.getElementById("tarot").innerHTML = "<tr><th>Carta</th><th>Qué hace</th><th>Prob.</th></tr>"+TAROT.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+
+// ---- Equipo por nivel
+const EQ = [
+ ["Medidor EMF","Luces del 1 al 5; hay que acercarse","Agrega sonido y más alcance","Pantalla con el nivel, se lee desde lejos"],
+ ["Caja espectral","Poco alcance, respuestas raras y con estática","Más alcance y audio más claro","Máximo alcance y responde más seguido"],
+ ["Libro de escritura","Poco alcance y menos probable","Más alcance y probabilidad","El que más rápido consigue escritura"],
+ ["Termómetro","Lento y puede marcar hasta 3 °C de más","Digital, más rápido (hasta 3 °C de más)","Casi instantáneo (hasta 2 °C de más)"],
+ ["Luz ultravioleta","Haz angosto, carga lenta","Mejor","Haz amplio y carga rapidísima"],
+ ["Proyector D.O.T.S.","Rejilla fija y corta","Más área","Barre el cuarto, hasta ~7 m"],
+ ["Crucifijo","Radio de 3 m","Radio de 4 m","Radio de 5 m y frena cacerías malditas"],
+ ["Incienso","Se quema rápido","Dura más","Dura más y cubre más área"],
+ ["Pastillas de cordura","Recuperan cordura","Recuperan un poco más","Las que más recuperan"],
+ ["Cámara de cabeza","Cámara de video","Agrega linterna","Visión nocturna"],
+ ["Micrófono parabólico","Poco alcance","Más alcance","El mayor alcance"]
+];
+document.getElementById("tiers").innerHTML = "<tr><th>Equipo</th><th>Nivel I</th><th>Nivel II</th><th>Nivel III</th></tr>"+EQ.map(r=>`<tr>${r.map((x,i)=>`<td${i?` data-l="Nivel ${"I".repeat(i)}"`:""}>${x}</td>`).join("")}</tr>`).join("");
+
+// ---- Mapas
+const MAPAS = [
+ {n:"Mapas chicos", m:"6 Tanglewood Drive, 42 Edgefield Road, 10 Ridgeview Court, Nell's Diner, Granja Grafton, 13 Willow Street, Camp Woodwind", e:["Equipo de pruebas completo (EMF, caja, libro, termómetro, UV, D.O.T.S., cámara con trípode).","Un crucifijo basta.","No hace falta sensor de sonido."]},
+ {n:"Mapas medianos", m:"Point Hope, Granja Bleasdale, Sunny Meadows (restringido), Prisión, Campamento Maple Lodge", e:["Agrega un segundo crucifijo.","Una vela o antorcha por jugador.","Dos pastillas y dos inciensos por persona.","El micrófono parabólico ayuda a encontrar el cuarto."]},
+ {n:"Mapas grandes", m:"Escuela Brownstone, Sunny Meadows (manicomio)", e:["Dos o tres crucifijos de nivel III.","Al menos uno con cámara de cabeza III (visión nocturna).","Micrófono parabólico y sensores de sonido para encontrar el cuarto.","Mucha sal y incienso: las partidas pueden durar hasta 30 minutos."]}
+];
+document.getElementById("mapas").innerHTML = MAPAS.map(m=>`<article class="card"><h3>${m.n}</h3><p class="note">${m.m}</p><ul>${m.e.map(x=>`<li>${x}</li>`).join("")}</ul></article>`).join("");
 </script>
 
 </body></html>
