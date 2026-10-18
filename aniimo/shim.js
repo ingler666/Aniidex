@@ -92,11 +92,11 @@
       d.innerHTML = `<div class="sbbox" role="dialog" aria-modal="true" aria-labelledby="sbdt"><button type="button" class="sbx" aria-label="Cerrar">✕</button><div class="sbic">🔒</div><h2 id="sbdt">Inicia sesión</h2><p id="sbdp"></p><form id="sbdform"><input type="email" id="sbdmail" placeholder="tu correo" required autocomplete="email"><button type="submit">Enviarme enlace</button></form><small id="sbdmsg"></small><p class="sbnote">Te llega un enlace al correo: ábrelo en este mismo navegador y listo, sin contraseña.</p></div>`;
       const css = document.createElement("style");
       css.textContent = `#sbdlg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:16px;background:rgba(10,14,12,.55)}#sbdlg[hidden]{display:none}
-#sbdlg .sbbox{position:relative;width:100%;max-width:380px;background:#fff;color:#1d2b24;border-radius:18px;padding:24px 20px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3);font:15px/1.45 system-ui,sans-serif;text-align:center}
-#sbdlg h2{margin:6px 0 4px;font-size:1.3rem}#sbdlg p{margin:0 0 14px;color:#4a5a52}#sbdlg .sbic{font-size:2rem}
-#sbdlg form{display:flex;flex-direction:column;gap:8px}#sbdlg input{font:inherit;font-size:16px;padding:11px 12px;border-radius:11px;border:1.5px solid #cfd8d3}
-#sbdlg form button{font:inherit;font-weight:800;padding:11px;border:0;border-radius:11px;background:#e8b923;color:#2a2000;cursor:pointer}
-#sbdlg small{display:block;margin-top:10px;color:#2e7d4f;font-weight:600}#sbdlg .sbnote{font-size:.8rem;margin:12px 0 0}
+#sbdlg .sbbox{position:relative;width:100%;max-width:380px;background:var(--surface,#fff);color:var(--ink,#1d2b24);border-radius:18px;padding:24px 20px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3);font:15px/1.45 system-ui,sans-serif;text-align:center}
+#sbdlg h2{margin:6px 0 4px;font-size:1.3rem}#sbdlg p{margin:0 0 14px;color:var(--muted,#4a5a52)}#sbdlg .sbic{font-size:2rem}
+#sbdlg form{display:flex;flex-direction:column;gap:8px}#sbdlg input{font:inherit;font-size:16px;padding:11px 12px;border-radius:11px;border:1.5px solid var(--line,#cfd8d3);background:var(--bg,#fff);color:var(--ink,#1d2b24)}
+#sbdlg form button{font:inherit;font-weight:800;padding:11px;border:0;border-radius:11px;background:var(--accent,#2f6f8f);color:var(--accent-ink,#fff);cursor:pointer}
+#sbdlg small{display:block;margin-top:10px;color:var(--accent,#2f6f8f);font-weight:700}#sbdlg .sbnote{font-size:.8rem;margin:12px 0 0}
 #sbdlg .sbx{position:absolute;top:10px;right:12px;border:0;background:none;font-size:1.1rem;cursor:pointer;color:#6b7a72}`;
       document.head.appendChild(css);
       document.body.appendChild(d);
@@ -112,16 +112,33 @@
   window.aniiAuth = { signedIn: !!session, prompt: loginPrompt };
 
   // --- barra de sesión ---
+  function mailOf() {
+    try { const p = JSON.parse(atob(session.access_token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))); return p.email || ""; } catch (e) { return ""; }
+  }
   function bar() {
     const b = document.createElement("div");
     b.id = "sbbar";
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     b.innerHTML = session
-      ? `<span>✅ Sesión iniciada: tus cambios se guardan en tu cuenta.</span><button type="button" id="sbout">Cerrar sesión</button>`
-      : `<span>🔒 Inicia sesión para ver y guardar tu inventario.</span><form id="sbform"><input type="email" id="sbmail" placeholder="tu correo" required autocomplete="email"><button type="submit">Enviarme enlace</button></form><small id="sbmsg">${hashErr ? "⚠️ " + decodeURIComponent(hashErr.replace(/\+/g, " ")) : ""}</small>`;
+      ? `<div class="sbin"><span class="sbok" aria-hidden="true">✓</span><span class="sbtx"><b>Sesión iniciada</b>${mailOf() ? `<small>${esc(mailOf())}</small>` : `<small>Tus cambios se guardan en tu cuenta</small>`}</span><button type="button" class="sbghost" id="sbout">Cerrar sesión</button></div>`
+      : `<div class="sbcard"><div class="sbhead"><span class="sbicon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Inicia sesión para guardar tu inventario</b><small>Sin contraseña: te mandamos un enlace a tu correo.</small></div></div><form id="sbform"><input type="email" id="sbmail" placeholder="tucorreo@ejemplo.com" required autocomplete="email" aria-label="Tu correo"><button type="submit">Enviarme enlace</button></form><small id="sbmsg">${hashErr ? "⚠️ " + esc(decodeURIComponent(hashErr.replace(/\+/g, " "))) : ""}</small></div>`;
     const css = document.createElement("style");
-    css.textContent = `#sbbar{position:relative;z-index:50;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;background:#1d2b24;color:#eef3f0;font:600 13.5px system-ui,sans-serif}
-#sbbar form{display:flex;gap:6px;flex-wrap:wrap}#sbbar input{padding:7px 10px;border-radius:9px;border:1px solid #3a4a43;background:#0f1714;color:#fff;min-width:200px}
-#sbbar button{padding:7px 12px;border-radius:9px;border:none;background:#e8b923;color:#2a2000;font-weight:800;cursor:pointer}#sbbar small{width:100%;color:#ffd27a}`;
+    css.textContent = `#sbbar{max-width:1100px;margin:16px auto 4px;font-family:var(--body,system-ui,sans-serif);color:var(--ink,#17251f)}
+#sbbar .sbcard{background:var(--surface,#fff);border:1px solid var(--line,#cfdad3);border-radius:18px;padding:16px;box-shadow:0 6px 20px rgba(23,37,31,.06);display:flex;flex-direction:column;gap:12px}
+#sbbar .sbhead{display:flex;align-items:center;gap:12px}
+#sbbar .sbicon{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--accent,#2f6f8f) 14%,transparent);color:var(--accent,#2f6f8f)}
+#sbbar b{display:block;font-family:var(--display,inherit);font-size:1.02rem;line-height:1.2}
+#sbbar small{display:block;color:var(--muted,#5a6b63);font-size:.85rem;margin-top:2px}
+#sbbar form{display:flex;gap:8px;flex-wrap:wrap}
+#sbbar input{flex:1 1 200px;min-width:0;font:inherit;font-size:16px;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line,#cfdad3);background:var(--bg,#eef3ef);color:var(--ink,#17251f)}
+#sbbar input:focus{outline:none;border-color:var(--accent,#2f6f8f);background:var(--surface,#fff)}
+#sbbar form button{flex:0 0 auto;font:inherit;font-weight:800;font-size:.95rem;padding:11px 18px;border:0;border-radius:12px;background:var(--accent,#2f6f8f);color:var(--accent-ink,#fff);cursor:pointer}
+@media (max-width:480px){#sbbar form button{flex:1 1 100%}}
+#sbbar #sbmsg{margin:0;color:var(--accent,#2f6f8f);font-weight:700}#sbbar #sbmsg:empty{display:none}
+#sbbar .sbin{display:flex;align-items:center;gap:10px;background:var(--surface,#fff);border:1px solid var(--line,#cfdad3);border-radius:999px;padding:6px 6px 6px 8px}
+#sbbar .sbok{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#2e8b4a;color:#fff;font-weight:800;font-size:.85rem}
+#sbbar .sbtx{flex:1;min-width:0}#sbbar .sbin b{font-size:.9rem}#sbbar .sbin small{margin:0;font-size:.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#sbbar .sbghost{flex:none;font:inherit;font-weight:700;font-size:.82rem;padding:7px 12px;border-radius:999px;border:1px solid var(--line,#cfdad3);background:transparent;color:var(--ink,#17251f);cursor:pointer}`;
     document.head.appendChild(css);
     document.body.prepend(b);
     const f = document.getElementById("sbform");
