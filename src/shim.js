@@ -115,7 +115,7 @@
       const rows = [];
       Object.entries(seed).forEach(([coll, docs]) => Object.entries(docs).forEach(([id, data]) => rows.push({ coll, id, data })));
       for (let i = 0; i < rows.length; i += 100) await api("docs?on_conflict=owner,coll,id", { method: "POST", headers: { Prefer: "resolution=merge-duplicates,return=minimal" }, body: JSON.stringify(rows.slice(i, i + 100)) });
-      try { ["aniidex-col", "aniidex-elite", "aniidex-sim", "aniidex-link", "aniidex-iri", "aniidex-eggs", "aniidex-ruta", "aniidex-fotos"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
+      try { ["aniidex-col", "aniidex-elite", "aniidex-sim", "aniidex-link", "aniidex-iri", "aniidex-eggs", "aniidex-robo", "aniidex-ruta", "aniidex-fotos"].forEach(k => localStorage.removeItem(k)); } catch (e) {}
       location.reload();
     } catch (e) { console.warn("No se pudo importar", e); }
   }
