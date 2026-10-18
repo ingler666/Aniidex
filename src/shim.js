@@ -77,6 +77,40 @@
     }
   };
 
+  async function sendLink(email, msg) {
+    msg.textContent = "Enviando…";
+    const r = await fetch(SB_URL + "/auth/v1/otp?redirect_to=" + encodeURIComponent(SITE), { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ email, create_user: true }) });
+    msg.textContent = r.ok ? "📧 Listo: revisa tu correo y abre el enlace en este mismo navegador." : "⚠️ No se pudo enviar (" + r.status + "). Intenta de nuevo en un minuto.";
+  }
+
+  // --- ventana para pedir inicio de sesión (la usa la Aniidex con window.aniiAuth.prompt) ---
+  function loginPrompt(text) {
+    let d = document.getElementById("sbdlg");
+    if (!d) {
+      d = document.createElement("div");
+      d.id = "sbdlg";
+      d.innerHTML = `<div class="sbbox" role="dialog" aria-modal="true" aria-labelledby="sbdt"><button type="button" class="sbx" aria-label="Cerrar">✕</button><div class="sbic">🔒</div><h2 id="sbdt">Inicia sesión</h2><p id="sbdp"></p><form id="sbdform"><input type="email" id="sbdmail" placeholder="tu correo" required autocomplete="email"><button type="submit">Enviarme enlace</button></form><small id="sbdmsg"></small><p class="sbnote">Te llega un enlace al correo: ábrelo en este mismo navegador y listo, sin contraseña.</p></div>`;
+      const css = document.createElement("style");
+      css.textContent = `#sbdlg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:16px;background:rgba(10,14,12,.55)}#sbdlg[hidden]{display:none}
+#sbdlg .sbbox{position:relative;width:100%;max-width:380px;background:#fff;color:#1d2b24;border-radius:18px;padding:24px 20px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3);font:15px/1.45 system-ui,sans-serif;text-align:center}
+#sbdlg h2{margin:6px 0 4px;font-size:1.3rem}#sbdlg p{margin:0 0 14px;color:#4a5a52}#sbdlg .sbic{font-size:2rem}
+#sbdlg form{display:flex;flex-direction:column;gap:8px}#sbdlg input{font:inherit;font-size:16px;padding:11px 12px;border-radius:11px;border:1.5px solid #cfd8d3}
+#sbdlg form button{font:inherit;font-weight:800;padding:11px;border:0;border-radius:11px;background:#e8b923;color:#2a2000;cursor:pointer}
+#sbdlg small{display:block;margin-top:10px;color:#2e7d4f;font-weight:600}#sbdlg .sbnote{font-size:.8rem;margin:12px 0 0}
+#sbdlg .sbx{position:absolute;top:10px;right:12px;border:0;background:none;font-size:1.1rem;cursor:pointer;color:#6b7a72}`;
+      document.head.appendChild(css);
+      document.body.appendChild(d);
+      d.addEventListener("click", e => { if (e.target === d || e.target.closest(".sbx")) d.hidden = true; });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") d.hidden = true; });
+      d.querySelector("#sbdform").addEventListener("submit", e => { e.preventDefault(); sendLink(d.querySelector("#sbdmail").value.trim(), d.querySelector("#sbdmsg")); });
+    }
+    d.querySelector("#sbdp").textContent = text || "Inicia sesión con tu correo para guardar tus cambios.";
+    d.querySelector("#sbdmsg").textContent = "";
+    d.hidden = false;
+    setTimeout(() => d.querySelector("#sbdmail").focus(), 50);
+  }
+  window.aniiAuth = { signedIn: !!session, prompt: loginPrompt };
+
   // --- barra de sesión ---
   function bar() {
     const b = document.createElement("div");
@@ -91,13 +125,7 @@
     document.head.appendChild(css);
     document.body.prepend(b);
     const f = document.getElementById("sbform");
-    if (f) f.addEventListener("submit", async e => {
-      e.preventDefault();
-      const email = document.getElementById("sbmail").value.trim(), msg = document.getElementById("sbmsg");
-      msg.textContent = "Enviando…";
-      const r = await fetch(SB_URL + "/auth/v1/otp?redirect_to=" + encodeURIComponent(SITE), { method: "POST", headers: { apikey: SB_KEY, "Content-Type": "application/json" }, body: JSON.stringify({ email, create_user: true }) });
-      msg.textContent = r.ok ? "📧 Listo: revisa tu correo y abre el enlace en este mismo navegador." : "⚠️ No se pudo enviar (" + r.status + "). Intenta de nuevo en un minuto.";
-    });
+    if (f) f.addEventListener("submit", e => { e.preventDefault(); sendLink(document.getElementById("sbmail").value.trim(), document.getElementById("sbmsg")); });
     const o = document.getElementById("sbout");
     if (o) o.addEventListener("click", () => { save(null); location.reload(); });
   }

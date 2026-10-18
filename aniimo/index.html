@@ -191,6 +191,8 @@ h3{font:700 16px/1.2 var(--display);margin:0}
 .role[class*="rl-"]{color:var(--rc);border-color:color-mix(in srgb,var(--rc) 45%,transparent);background:color-mix(in srgb,var(--rc) 12%,var(--surface));font-weight:800;border-radius:999px;padding:2px 9px}
 .attr[class*="rl-"]{border-color:color-mix(in srgb,var(--rc) 40%,transparent);background:color-mix(in srgb,var(--rc) 11%,var(--surface))}.attr[class*="rl-"] svg{color:var(--rc)}
 .dexhead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.regbig{font-size:14px;padding:9px 14px;border-radius:10px;margin-left:auto}
+.reghint{margin:6px 0 0;font-size:13.5px;background:var(--surface);border:1px dashed var(--accent);border-radius:10px;padding:8px 12px}
 .dexcount{font-size:15px;color:var(--muted)}.dexcount b{font:800 22px var(--display);color:var(--ink)}
 .stempty{flex-direction:row!important;align-items:center;justify-content:center;gap:12px;padding:18px 14px!important}.stempty b{font:800 18px var(--display);color:var(--muted)}.stempty .stic{opacity:.7}
 .stzero{text-align:center;padding:14px;border-radius:12px;background:var(--sunk);font:700 14px var(--display);color:var(--muted)}
@@ -564,7 +566,8 @@ ul.tips{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 <nav class="tabs" role="tablist" id="tabs"></nav>
 
 <section class="panel" id="p-dex">
-  <div class="dexhead"><h2>Aniidex y colección</h2><span id="dexCount" class="dexcount"></span></div>
+  <div class="dexhead"><h2>Aniidex y colección</h2><span id="dexCount" class="dexcount"></span><button type="button" class="btn primary regbig" id="regBtn">+ Registrar ánimo</button></div>
+  <p class="reghint" id="regHint" hidden>Busca el ánimo que atrapaste y toca <b>+ Registrar ánimo</b> en su tarjeta.</p>
   <div class="stats" id="stats"></div>
   <div class="toolbar">
     <input type="search" id="q" placeholder="Buscar Aniimo…" aria-label="Buscar Aniimo">
@@ -701,7 +704,7 @@ ul.tips{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
   <div class="boxes" id="iriBoxes"></div>
 </section>
 
-<p class="src">Datos de la versión 1.0 (octubre 2026). Fuentes: <a href="https://metabot.gg/en/aniimo" target="_blank" rel="noopener">MetaBot</a>, <a href="https://aniimotools.dev/" target="_blank" rel="noopener">AniimoTools</a>, <a href="https://allthings.how/" target="_blank" rel="noopener">AllThings.How</a>, <a href="https://www.aniimoverse.com/guides/lita-rematch" target="_blank" rel="noopener">AniimoVerse</a>, <a href="https://mobalytics.gg/gamebase/guides/aniimo-tier-list" target="_blank" rel="noopener">Mobalytics</a>.</p>
+<p class="src"><b>Fecha de la última actualización: 18 de octubre de 2026.</b> Fuentes: <a href="https://metabot.gg/en/aniimo" target="_blank" rel="noopener">MetaBot</a>, <a href="https://aniimotools.dev/" target="_blank" rel="noopener">AniimoTools</a>, <a href="https://allthings.how/" target="_blank" rel="noopener">AllThings.How</a>, <a href="https://www.aniimoverse.com/guides/lita-rematch" target="_blank" rel="noopener">AniimoVerse</a>, <a href="https://mobalytics.gg/gamebase/guides/aniimo-tier-list" target="_blank" rel="noopener">Mobalytics</a>.</p>
 </div>
 
 <input type="file" accept="image/*" id="phGlobal" aria-hidden="true" tabindex="-1" style="position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0">
@@ -1083,7 +1086,7 @@ function cardHTML(sp){
   const total=own?c.ejemplares.length:0, open=EXP.has(sp.id);
   const note=(sp.note||"").split(" · ").filter(x=>!/^Evoluciona/.test(x)).join(" · ");
   return `<article class="card ${own?"own":""}${open?" open":""}" data-id="${sp.id}">
-   <div class="row chead">${photoHTML(sp.id,"thumb")}<div class="cname"><span class="name">${esc(esName(sp.n))}</span><span class="csep" aria-hidden="true"></span>${own?`<span class="cown"><span class="cchk">✓</span>Tienes <b>${total}</b></span>`:starterLock(sp)?`<span class="cown none lock">🔒 No disponible</span>`:`<span class="cown none">No lo tienes</span>`}</div><div class="cright"><button type="button" class="cxbtn" data-act="tog" aria-expanded="${open}" aria-label="${open?"Ocultar":"Mostrar"} detalles"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="dex">#${dexNo(sp)}</span>${own?`<button type="button" class="btn small addtop" data-act="add">+ Añadir ejemplar</button>`:""}</div></div>
+   <div class="row chead">${photoHTML(sp.id,"thumb")}<div class="cname"><span class="name">${esc(esName(sp.n))}</span><span class="csep" aria-hidden="true"></span>${own?`<span class="cown"><span class="cchk">✓</span>Tienes <b>${total}</b></span>`:starterLock(sp)?`<span class="cown none lock">🔒 No disponible</span>`:`<span class="cown none">No lo tienes</span>`}</div><div class="cright"><button type="button" class="cxbtn" data-act="tog" aria-expanded="${open}" aria-label="${open?"Ocultar":"Mostrar"} detalles"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="dex">#${dexNo(sp)}</span>${own?`<button type="button" class="btn small addtop" data-act="add">+ Añadir ejemplar</button>`:starterLock(sp)?"":`<button type="button" class="btn small addtop regtop" data-act="reg">+ Registrar ánimo</button>`}</div></div>
    ${!own&&starterLock(sp)?`<div class="locknote"><span class="lockic" aria-hidden="true">🔒</span><span>Tienes a <b>${starterLock(sp)}</b>, por eso no es posible tenerlo. <span class="lockwhy">Al inicio del juego solo eliges uno de los dos guardianes iniciales (Helion o Lunara). En la historia, el que no eliges regresa al mural donde lo conociste. Por ahora no aparece en estado salvaje ni sale de huevos.</span></span></div>`:""}
    <div class="row">${roleChip(sp.role)}</div>
    <div class="row">${chips(own?[...new Set(c.ejemplares.flatMap(s=>specEls(sp,s)))]:sp.els)}${own&&c.ejemplares.some(s=>specEls(sp,s).join()!==sp.els.join())?`<span class="note" style="font-size:11.5px">según tus registros</span>`:""}</div>
@@ -1279,6 +1282,8 @@ function renderDex(){
   document.getElementById("dexGrid").innerHTML=list.map(cardHTML).join("")||(fo==="miss"?"":`<p class="note">Ningún ánimo coincide con la búsqueda.</p>`);
   renderStats();
 }
+/* En ingler.me hay que iniciar sesión para registrar o editar (en Claude no aplica) */
+function needLogin(){const a=window.aniiAuth;if(a&&!a.signedIn){a.prompt("Para registrar o editar tus ánimos, inicia sesión con tu correo.");return true}return false}
 let refT=null;function refreshSoon(){clearTimeout(refT);refT=setTimeout(()=>{renderStats();renderGuides()},700)}
 function rerenderCard(id){const el=document.querySelector(`.card[data-id="${id}"]`);const sp=DEX.find(d=>d.id===id);if(el&&sp){el.outerHTML=cardHTML(sp)}renderStats();renderGuides()}
 const grid=document.getElementById("dexGrid");
@@ -1287,12 +1292,15 @@ grid.addEventListener("click",e=>{
   if(e.target.closest("[data-act=phpick]")){e.preventDefault();e.stopPropagation();pickPhoto(id);return}
   const tg=e.target.closest("[data-act=tog]");if(tg){const op=!EXP.has(id);op?EXP.add(id):EXP.delete(id);card.classList.toggle("open",op);card.querySelector(".cbody").hidden=!op;tg.setAttribute("aria-expanded",op);tg.setAttribute("aria-label",(op?"Ocultar":"Mostrar")+" detalles");return}
   const act=e.target.dataset.act;
+  if(["add","reg","del","homefill"].includes(act)&&needLogin())return;
+  if(act==="reg"){COL[id]={especie:sp.n,ejemplares:[newSpec(sp)]};EXP.add(id);persist(id);rerenderCard(id);setStatus("¡"+esName(sp.n)+" registrado! Llena sus datos abajo");return}
   if(act==="add"){COL[id].ejemplares.unshift(newSpec(sp));EXP.add(id);persist(id);rerenderCard(id);setStatus("Ejemplar nuevo agregado arriba");return}
   if(act==="homefill"){const i=+e.target.closest(".spec").dataset.i;const h={};(HOME_BY[sp.n]||[]).forEach(x=>{h[x.e]=Math.max(h[x.e]||0,x.l)});COL[id].ejemplares[i].hogar=h;persist(id);rerenderCard(id);return}
   if(act==="del"){const i=+e.target.closest(".spec").dataset.i;COL[id].ejemplares.splice(i,1);persist(id);rerenderCard(id)}
 });
 grid.addEventListener("change",e=>{
   const card=e.target.closest(".card");if(!card)return;const id=card.dataset.id;const sp=DEX.find(d=>d.id===id);
+  if(needLogin()){rerenderCard(id);return}
   if(e.target.dataset.act==="own"){
     if(e.target.checked){COL[id]={especie:sp.n,ejemplares:[newSpec(sp)]}}else{delete COL[id]}
     persist(id);rerenderCard(id);return}
@@ -1309,6 +1317,7 @@ grid.addEventListener("change",e=>{
   if(k==="cantidad"||e.target.type==="checkbox"||k==="potencial"){const lbl=card.querySelector(".own-toggle");const total=COL[id].ejemplares.reduce((a,s)=>a+1,0);lbl.lastChild.textContent=` Lo tengo · ${total} en inventario`;renderStats();renderGuides()}
 });
 ["q","fEl","fRole","fVar","fOwn"].forEach(x=>document.getElementById(x).addEventListener("input",renderDex));
+document.getElementById("regBtn").addEventListener("click",()=>{if(needLogin())return;const f=document.getElementById("fOwn");f.value="miss";renderDex();document.getElementById("regHint").hidden=false;const q=document.getElementById("q");q.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>q.focus(),300)});
 document.getElementById("expAll").addEventListener("click",e=>{const b=e.currentTarget,on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);b.textContent=on?"Plegar todos":"Desplegar todos";EXP.clear();if(on)DEX.forEach(d=>EXP.add(d.id));renderDex()});
 POT.forEach(p=>document.getElementById("iPot").insertAdjacentHTML("beforeend",`<option>${p}</option>`));
 document.getElementById("iInc").addEventListener("click",e=>{const b=e.currentTarget;b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true");renderInv()});
