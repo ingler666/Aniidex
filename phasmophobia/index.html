@@ -1,0 +1,467 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Diario de Cazafantasmas</title><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Diario de Cazafantasmas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Kalam:wght@400;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: una columna tipo diario; pruebas fijas arriba, fichas de fantasmas debajo */
+:root{
+  --bg:#efeaf6; --paper:#fbf8fd; --ink:#241c33; --muted:#6b6180; --line:#d9cfe6;
+  --uv:#6d3fd6; --uv-soft:#e7dcfb; --ok:#1f8a5b; --ok-soft:#d8f1e4; --no:#b4344a; --no-soft:#f7dde2;
+  --horror:"Creepster","Kalam",cursive; --hand:"Kalam","Comic Sans MS",cursive; --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14101d; --paper:#1e1829; --ink:#ece6f6; --muted:#a69cba; --line:#352c45;
+  --uv:#b393ff; --uv-soft:#2e2347; --ok:#5fd39b; --ok-soft:#173327; --no:#ff8095; --no-soft:#3a1c24; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14101d; --paper:#1e1829; --ink:#ece6f6; --muted:#a69cba; --line:#352c45;
+  --uv:#b393ff; --uv-soft:#2e2347; --ok:#5fd39b; --ok-soft:#173327; --no:#ff8095; --no-soft:#3a1c24; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header h1{font-family:var(--horror);font-weight:400;font-size:2.5rem;line-height:1.05;letter-spacing:.02em;color:var(--uv);margin:0;text-wrap:balance}
+header p{margin:4px 0 0;color:var(--muted)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}
+.panel-head h2{font-family:var(--hand);font-size:1.45rem;margin:0}
+.reset{font:inherit;font-size:.85rem;background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;cursor:pointer}
+.reset:focus-visible,.ev:focus-visible,summary:focus-visible{outline:2px solid var(--uv);outline-offset:2px}
+.evs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ev{font:inherit;text-align:left;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;min-height:52px}
+.box{flex:none;width:24px;height:24px;border:2px solid currentColor;border-radius:4px;display:grid;place-items:center;font-weight:700;font-size:15px;line-height:1}
+.ev .t{font-size:.92rem;line-height:1.2}
+.ev[data-s="1"]{border-color:var(--ok);background:var(--ok-soft)}
+.ev[data-s="1"] .box{color:var(--ok)}
+.ev[data-s="2"]{border-color:var(--no);background:var(--no-soft)}
+.ev[data-s="2"] .box{color:var(--no)}
+.ev[data-s="2"] .t{text-decoration:line-through}
+.ev.dead{opacity:.38}
+.hint{margin:10px 0 0;font-size:.82rem;color:var(--muted)}
+.count{font-family:var(--hand);font-size:1.45rem;margin:0}
+.count b{color:var(--uv)}
+.list{display:flex;flex-direction:column;gap:8px}
+details{background:var(--paper);border:1px solid var(--line);border-radius:12px}
+details[open]{border-color:var(--uv)}
+summary{list-style:none;cursor:pointer;padding:10px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+summary::-webkit-details-marker{display:none}
+.name{font-family:var(--hand);font-weight:700;font-size:1.35rem;line-height:1.1}
+.en{font-size:.78rem;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:4px;width:100%}
+.tag{font-size:.74rem;padding:2px 8px;border-radius:999px;background:var(--uv-soft);color:var(--ink);white-space:nowrap}
+.tag.hit{background:var(--ok-soft);outline:1px solid var(--ok)}
+.tag.fake{background:transparent;outline:1px dashed var(--muted);color:var(--muted)}
+.body{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.stats{display:flex;flex-wrap:wrap;gap:6px}
+.stat{font-size:.8rem;border:1px solid var(--line);border-radius:8px;padding:3px 8px;color:var(--muted)}
+.stat b{color:var(--ink);font-variant-numeric:tabular-nums}
+.body ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.tip{font-size:.88rem;background:var(--uv-soft);border-radius:8px;padding:8px 10px}
+.tip strong{color:var(--uv)}
+.que{width:100%;font-size:.88rem;color:var(--muted)}
+.sw{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:480px){.sw{grid-template-columns:1fr}}
+.sw>div{border-radius:8px;padding:8px 10px;font-size:.9rem}
+.sw .f{background:var(--no-soft)}
+.sw .w{background:var(--ok-soft)}
+.lbl{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+.sw .f .lbl{color:var(--no)} .sw .w .lbl{color:var(--ok)}
+.tabs{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+.tab{flex:1;font:inherit;font-weight:700;font-size:.9rem;border:0;border-radius:999px;padding:9px 10px;background:transparent;color:var(--muted);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--uv);color:var(--paper)}
+.tab:focus-visible,.wx:focus-visible{outline:2px solid var(--uv);outline-offset:2px}
+.view{display:flex;flex-direction:column;gap:18px}
+.wxs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.wx{font:inherit;text-align:left;padding:9px 10px;border-radius:10px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;gap:1px}
+.wx b{font-size:.92rem}
+.wx span{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.wx[aria-pressed="true"]{border-color:var(--uv);background:var(--uv-soft)}
+.wxinfo{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big .deg{font-family:var(--hand);font-weight:700;font-size:2.4rem;line-height:1;color:var(--uv);font-variant-numeric:tabular-nums}
+.big .sub{color:var(--muted);font-size:.9rem}
+.wxinfo ul,.rules{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.scale{position:relative;margin:28px 4px 8px;height:14px;border-radius:999px;background:linear-gradient(90deg,#5aa8ff 0%,#9fd3ff 33.3%,#e9e3f3 50%,#ffb36b 100%)}
+.mk{position:absolute;top:-6px;width:2px;height:26px;background:var(--ink);transform:translateX(-1px)}
+.mk .ml{position:absolute;top:30px;left:50%;transform:translateX(-50%);font-size:.7rem;line-height:1.15;text-align:center;white-space:nowrap;color:var(--muted)}
+.mk .mv{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:.72rem;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mk.now{background:var(--uv);width:4px;transform:translateX(-2px)}
+.mk.now .mv{color:var(--uv)}
+.scalewrap{overflow-x:auto;padding-bottom:40px}
+.scalein{min-width:480px}
+.ftable{width:100%;border-collapse:collapse;font-size:.88rem}
+.ftable td{padding:6px 4px;border-top:1px solid var(--line);vertical-align:top}
+.ftable td:first-child{font-family:var(--hand);font-weight:700;font-size:1.05rem;white-space:nowrap;padding-right:10px}
+.note{font-size:.82rem;color:var(--muted);margin:0}
+.none{padding:18px;text-align:center;color:var(--muted)}
+footer{font-size:.78rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.ev,details{transition:background .15s,border-color .15s,opacity .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Diario de Cazafantasmas</h1>
+    <p>Toca una prueba una vez para marcarla como encontrada (✓) y otra vez para descartarla (✗). La lista se filtra sola.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-ev" aria-selected="true" type="button">Pruebas y fantasmas</button>
+    <button class="tab" role="tab" id="tab-wx" aria-selected="false" type="button">Clima y temperatura</button>
+  </div>
+
+  <div class="view" id="view-ev">
+  <section class="panel" aria-labelledby="h-ev">
+    <div class="panel-head">
+      <h2 id="h-ev">Pruebas</h2>
+      <button class="reset" id="reset" type="button">Reiniciar</button>
+    </div>
+    <div class="evs" id="evs"></div>
+    <p class="hint">Las pruebas atenuadas ya no son posibles con lo que marcaste.</p>
+  </section>
+
+  <section aria-live="polite">
+    <p class="count" id="count"></p>
+  </section>
+  <div class="list" id="list"></div>
+  </div>
+
+  <div class="view" id="view-wx" hidden>
+    <section class="panel" aria-labelledby="h-wx">
+      <div class="panel-head"><h2 id="h-wx">¿Qué clima tiene tu partida?</h2></div>
+      <div class="wxs" id="wxs"></div>
+      <div class="wxinfo" id="wxinfo"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="h-sc">
+      <div class="panel-head"><h2 id="h-sc">Escala del termómetro</h2></div>
+      <div class="scalewrap"><div class="scalein"><div class="scale" id="scale"></div></div></div>
+      <ul class="rules">
+        <li><b>Prueba de Temperaturas heladas:</b> el termómetro debe marcar <b>menos de 0 °C (32 °F)</b>.</li>
+        <li><b>Fantasma sin Heladas:</b> su cuarto baja como mínimo a <b>1 °C (33.8 °F)</b>. Nunca llega a cero.</li>
+        <li><b>Fantasma con Heladas:</b> puede bajar su cuarto hasta <b>−10 °C (14 °F)</b>.</li>
+        <li><b>Calefacción:</b> con el cuadro eléctrico encendido, los cuartos interiores suben poco a poco hasta <b>20 °C (68 °F)</b>, que es lo más caliente que se ponen. Con el cuadro apagado vuelven a la temperatura del clima.</li>
+        <li><b>Tu aliento:</b> lo ves en cualquier cuarto a <b>5 °C (41 °F) o menos</b>, así que no siempre indica el cuarto del fantasma.</li>
+        <li><b>Margen del termómetro:</b> los de nivel I y II pueden marcar hasta 3 °C de más, y el de nivel III hasta 2 °C de más. Un 2 °C puede ser realmente un 0 °C: espera un poco y vuelve a medir.</li>
+        <li>El cuarto del fantasma se enfría aunque el cuadro esté encendido, y vuelve a calentarse cuando el fantasma se va.</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="h-fz">
+      <div class="panel-head"><h2 id="h-fz">Fantasmas con Temperaturas heladas</h2></div>
+      <div style="overflow-x:auto"><table class="ftable" id="ftable"></table></div>
+      <p class="note">Toca la pestaña de pruebas para ver la ficha completa de cada uno.</p>
+    </section>
+  </div>
+
+  <footer>Diario de fans, sin relación oficial con Kinetic Games. 30 fantasmas, actualizado a octubre de 2026. Toca un fantasma para ver su fuerza, su debilidad y pistas para reconocerlo.</footer>
+</div>
+
+<script>
+const EV = [
+  {k:"emf",  n:"Medidor EMF 5"},
+  {k:"dots", n:"Proyector D.O.T.S."},
+  {k:"uv",   n:"Ultravioleta"},
+  {k:"frio", n:"Temperaturas heladas"},
+  {k:"orbes",n:"Orbes espectrales"},
+  {k:"esc",  n:"Escritura fantasma"},
+  {k:"caja", n:"Caja espectral"}
+];
+const SHORT = {emf:"EMF 5",dots:"D.O.T.S.",uv:"Ultravioleta",frio:"Heladas",orbes:"Orbes",esc:"Escritura",caja:"Caja espectral"};
+
+const G = [
+ {n:"Asuang",en:"Aswang",ev:["dots","frio","esc"],vel:"1.53 m/s, acelera muy rápido",caza:"50%",
+  que:"Un cazador que persigue a su presa en lugar de buscarla.",
+  fuerza:"Cuando te ve, acelera más rápido que cualquier otro fantasma.",
+  debil:"Prefiere perseguir que buscar: si llegas a un escondite antes de que te atrape, la cacería termina.",
+  p:["Empieza las cacerías lento y se dispara en cuanto te ve.","Si te encuentra en un escondite oficial, la cacería se corta de golpe y no te mata.","En la siguiente cacería va directo a ese mismo escondite y aparece sin aviso.","Se confunde fácil con el Revenant: comparten Heladas y Escritura."],
+  tip:"Después de que te encuentre escondido, cambia de escondite para la próxima cacería."},
+ {n:"Banshee",en:"Banshee",ev:["uv","orbes","dots"],vel:"normal",caza:"50% (según la cordura de su objetivo)",
+  que:"Una cazadora que elige a una sola víctima y la persigue hasta el final.",
+  fuerza:"Ignora a todos los demás y se concentra en un solo jugador.",
+  debil:"Su grito en el micrófono parabólico la delata.",
+  p:["Siempre es fantasma femenino.","Canta mucho en los eventos (tararea).","Puede gritar de forma única en el micrófono parabólico.","Suele ir hacia su víctima aunque esté lejos de su cuarto.","Si muere su objetivo, elige a otro.","Caza cuando la cordura de su objetivo, no la del equipo, baja del 50%.","Si su objetivo sale de la casa, se comporta como un fantasma normal."],
+  tip:"Si en una cacería pasa junto a otros jugadores sin matarlos, es Banshee."},
+ {n:"Dayan",en:"Dayan",ev:["emf","orbes","caja"],vel:"1.2 si estás quieto / 2.25 si te mueves",caza:"45% a 65%",
+  que:"Un espíritu que se enfurece cuando los vivos se mueven ('bailan') cerca de ella.",
+  fuerza:"Si te mueves a menos de 10 m, se vuelve rápida y caza antes.",
+  debil:"Si te quedas quieto cerca de ella, se vuelve lenta y menos agresiva.",
+  p:["Siempre es fantasma femenino.","Su velocidad cambia según si te mueves o te quedas quieto cerca de ella.","Funciona incluso si estás en otro piso pero a menos de 10 m.","Caza más temprano cuando hay gente moviéndose en su cuarto.","Si no hay nadie a menos de 10 m, se mueve a velocidad normal."],
+  tip:"En una cacería, congélate cuando esté cerca: si se pone lenta, es Dayan."},
+ {n:"Deildegast",en:"Deildegast",ev:["emf","esc","dots"],vel:"3 m/s bajando hasta 0.4",caza:"50%",
+  que:"El espíritu de alguien que movía cosas ajenas; le obsesiona lo que está fuera de lugar.",
+  fuerza:"Empieza el contrato siendo el fantasma más rápido del juego.",
+  debil:"Cada objeto que los jugadores mueven o lanzan lo vuelve más lento.",
+  p:["Muy rápido al inicio de la partida, sin necesidad de verte.","No acelera cuando te ve.","Se vuelve más lento mientras más objetos distintos mueven los jugadores (también los muertos).","Puertas, objetos malditos y equipo no cuentan.","Vuelve a ser rápido después de cada cacería o si quema un crucifijo.","Casi no toca puertas ni interruptores de luz."],
+  tip:"Desde el principio lanza muchos objetos por la casa y repítelo tras cada cacería."},
+ {n:"Demonio",en:"Demon",ev:["uv","frio","esc"],vel:"normal",caza:"70% (o con cualquier cordura)",
+  que:"El fantasma más agresivo de todos.",
+  fuerza:"Caza más seguido y mucho antes que los demás.",
+  debil:"Le tiene más miedo al crucifijo: le afecta desde más lejos.",
+  p:["Puede empezar a cazar con la cordura muy alta.","Solo espera 20 s entre una cacería y la siguiente.","El sahumerio lo frena solo 60 s (a otros, 90 s).","Hace muchos eventos y cacerías en poco tiempo.","Los demás fantasmas esperan unos 25 s entre cacerías."],
+  tip:"Pon un crucifijo en su cuarto desde el inicio. Si caza con el equipo casi al 100%, es Demonio."},
+ {n:"Deogen",en:"Deogen",ev:["caja","esc","dots"],vel:"3 m/s lejos / 0.4 cerca",caza:"40%",
+  que:"Un espíritu que siempre sabe dónde están los vivos.",
+  fuerza:"Te encuentra siempre: esconderse no sirve de nada.",
+  debil:"Cuando está cerca de ti se vuelve muy, muy lento.",
+  p:["Corre muy rápido hacia ti y frena al acercarse.","En la caja espectral responde con una respiración pesada.","Cuando aparece se ve más tiempo que otros fantasmas.","Toca más puertas que otros.","Fija a un jugador y lo sigue; si alguien más se le cruza, también puede matarlo.","En Pesadilla, Caja espectral siempre es una de sus pruebas."],
+  tip:"No te escondas. Cuando esté cerca, camina en círculos alrededor de una mesa o mueble."},
+ {n:"Gallu",en:"Gallu",ev:["emf","uv","caja"],vel:"1.36 a 1.96 m/s",caza:"40% / 50% / 60%",
+  que:"Otra forma de demonio que odia el equipo de protección.",
+  fuerza:"El crucifijo, el sahumerio y la sal lo enfurecen y lo hacen más peligroso.",
+  debil:"Estar enfurecido lo agota: después queda debilitado y el equipo funciona mejor contra él.",
+  p:["Tiene tres estados: normal, enfurecido y debilitado.","Enfurecido: más rápido, caza al 60%, el crucifijo alcanza menos y no pisa la sal.","Debilitado: más lento, caza al 40% y el sahumerio lo ciega 7.5 s en la cacería (a otros, 5 s).","Su velocidad cambia de una cacería a otra."],
+  tip:"Si después de usar sahumerio o crucifijo se vuelve más rápido, es Gallu."},
+ {n:"Goryo",en:"Goryo",ev:["emf","uv","dots"],vel:"normal",caza:"50%",
+  que:"Un espíritu atado a su lugar que solo se deja ver por cámara.",
+  fuerza:"Casi nunca se le ve directamente.",
+  debil:"Nunca se aleja de su habitación favorita.",
+  p:["En el D.O.T.S. solo aparece a través de una cámara de video.","Solo se muestra en D.O.T.S. si no hay nadie en el cuarto.","Nunca cambia de habitación favorita.","Casi no vaga por la casa, pero interactúa más con objetos."],
+  tip:"Pon D.O.T.S. y una cámara en su cuarto, sal, y mira desde el monitor."},
+ {n:"Hantu",en:"Hantu",ev:["uv","orbes","frio"],vel:"1.4 en calor / 2.7 en frío",caza:"50%",
+  que:"Un espíritu raro que se fortalece con el frío.",
+  fuerza:"En cuartos helados se mueve muy rápido.",
+  debil:"En cuartos calientes se vuelve lento.",
+  p:["Nunca enciende el cuadro eléctrico y lo apaga seguido.","Con el cuadro apagado, se le ve aliento helado al cazar.","Su velocidad cambia según la temperatura del cuarto donde pasa.","No acelera cuando te ve.","En Pesadilla, Temperaturas heladas siempre es una de sus pruebas."],
+  tip:"Mantén el cuadro eléctrico encendido para que la casa no se enfríe."},
+ {n:"Jinn",en:"Jinn",ev:["emf","uv","frio"],vel:"2.5 m/s si te ve de lejos",caza:"50%",
+  que:"Un espíritu territorial que se alimenta de la electricidad.",
+  fuerza:"Con la luz encendida, va rápido hacia ti si te ve de lejos.",
+  debil:"Si apagas el cuadro eléctrico, pierde sus habilidades.",
+  p:["Nunca apaga el cuadro eléctrico por sí mismo.","Cerca del cuadro puede quitarte 25% de cordura de golpe (deja EMF en el cuadro).","Va rápido de lejos y normal cuando está cerca.","Si el medidor EMF junto al cuadro eléctrico suena sin que se apague la luz, usó su habilidad."],
+  tip:"Apaga el cuadro eléctrico: si en ninguna partida lo apaga él, piensa en Jinn."},
+ {n:"Kormos",en:"Kormos",ev:["orbes","caja","uv"],vel:"2.21 m/s hacia el ruido",caza:"50% (70% si corres cerca)",
+  que:"Un fantasma ciego que caza solo con el oído.",
+  fuerza:"Oye tus pasos desde muy lejos, sobre todo si corres.",
+  debil:"No te ve: si te quedas quieto y callado, no te encuentra.",
+  p:["Oye correr a 30 m, caminar a 15 m y caminar agachado a 10 m.","Solo te ve a menos de 5 m y sin obstáculos.","Correr cerca de él lo hace cazar antes.","No hace eventos de niebla ni de persecución."],
+  tip:"En una cacería, no te muevas. Si pasa junto a ti sin notarte, es Kormos. Descarta al Mímico: el Kormos no da Heladas."},
+ {n:"Pesadilla",en:"Mare",ev:["caja","orbes","esc"],vel:"normal",caza:"60% a oscuras / 40% con luz",
+  que:"La fuente de todas las pesadillas: domina en la oscuridad.",
+  fuerza:"Ataca más seguido cuando las luces están apagadas.",
+  debil:"Con la luz encendida se vuelve menos agresiva.",
+  p:["Nunca enciende luces, solo las apaga.","Si enciendes una luz cerca de ella, la apaga casi enseguida.","Rompe focos más que otros fantasmas.","Vaga más por la casa cuando su cuarto está iluminado.","Sí puede encender televisiones y computadoras."],
+  tip:"Enciende la luz de su cuarto: si se apaga sola en un segundo, es Pesadilla."},
+ {n:"Moroi",en:"Moroi",ev:["caja","esc","frio"],vel:"más rápido con poca cordura",caza:"50%",
+  que:"Un espíritu que maldice a los vivos y se alimenta de su cordura.",
+  fuerza:"Mientras más baja la cordura del equipo, más rápido caza.",
+  debil:"Las pastillas de cordura quitan su maldición, y el sahumerio lo ciega más tiempo.",
+  p:["Maldice a quien lo escucha por la caja espectral o el micrófono parabólico.","La maldición hace que pierdas cordura el doble de rápido, aunque estés en la luz.","Puede ser de los fantasmas más rápidos con el equipo casi sin cordura.","La maldición deja de bajarte cordura mientras estés fuera de la casa.","En Pesadilla, Caja espectral siempre es una de sus pruebas."],
+  tip:"Si tu cordura baja muy rápido después de hablar por la caja espectral, toma pastillas: puede ser Moroi."},
+ {n:"Myling",en:"Myling",ev:["emf","uv","esc"],vel:"normal",caza:"50%",
+  que:"Un espíritu muy parlanchín fuera de la cacería y silencioso dentro de ella.",
+  fuerza:"Sus pasos casi no se oyen cuando caza.",
+  debil:"Hace muchos sonidos paranormales, fáciles de oír con el micrófono parabólico.",
+  p:["Sus pasos y ruidos de cacería solo se oyen a 12 m (otros, a 20 m).","Se le oye mucho con el micrófono parabólico."],
+  tip:"Si durante la cacería lo oyes solo cuando ya está muy cerca, piensa en Myling."},
+ {n:"Obake",en:"Obake",ev:["emf","uv","orbes"],vel:"normal",caza:"50%",
+  que:"Un cambiaformas que casi no deja rastro.",
+  fuerza:"Deja pocas huellas y desaparecen rápido.",
+  debil:"A veces deja huellas imposibles, como una mano de seis dedos.",
+  p:["Puede dejar una mano de seis dedos o huellas de dos o cinco dedos raras.","Sus huellas duran la mitad de tiempo.","Cambia de forma mientras parpadea en la cacería.","En dificultades con pocas pruebas, Ultravioleta siempre es una de ellas."],
+  tip:"Revisa puertas e interruptores con la luz UV seguido, antes de que desaparezcan las huellas."},
+ {n:"Obambo",en:"Obambo",ev:["esc","uv","dots"],vel:"1.45 calmado / 1.96 agresivo",caza:"10% calmado / 65% agresivo",
+  que:"Un espíritu de dos humores que cambia entre calma y furia.",
+  fuerza:"En su estado agresivo es rápido y caza muy pronto.",
+  debil:"En su estado calmado tarda muchísimo en cazar.",
+  p:["Cambia de humor cada 2 minutos, incluso a mitad de una cacería.","Empieza calmado; se vuelve agresivo 1 minuto después de abrir la puerta.","Calmado: muy activo, lento y casi no caza.","Agresivo: menos activo, más rápido, y sus cacerías duran menos."],
+  tip:"Si su velocidad cambia a mitad de una cacería, es Obambo."},
+ {n:"Oni",en:"Oni",ev:["emf","frio","dots"],vel:"normal",caza:"50%",
+  que:"Un primo del Demonio al que le encanta asustar.",
+  fuerza:"Se vuelve muy activo cuando hay gente cerca.",
+  debil:"Al ser tan activo, es fácil de encontrar.",
+  p:["Mientras más gente haya en su cuarto, más cosas hace.","Se ve más sólido y por más tiempo durante las cacerías.","Nunca hace el evento de la bola de niebla.","Si te toca en un evento, te quita el doble de cordura.","En la cacería casi siempre es visible y parpadea muy poco; es de los más fáciles de reconocer sin pruebas."],
+  tip:"Si hace muchas cosas cuando el equipo está junto en su cuarto, piensa en Oni."},
+ {n:"Onryo",en:"Onryo",ev:["caja","orbes","frio"],vel:"normal",caza:"60%",
+  que:"Un espíritu vengativo que le teme al fuego.",
+  fuerza:"Si apaga tres llamas, puede cazar sin importar la cordura.",
+  debil:"Una llama encendida cerca le impide cazar.",
+  p:["Cuando intenta cazar cerca de una vela, la apaga en lugar de cazar.","Nunca enciende velas.","Apaga más llamas mientras más jugadores hayan muerto.","Caza un poco antes que lo normal (60%).","Un crucifijo puede detener la cacería que provoca al apagar la tercera llama."],
+  tip:"Llena su zona de velas encendidas. Si con la cordura muy baja sigue sin cazar y solo apaga velas, es Onryo."},
+ {n:"Ente",en:"Phantom",ev:["caja","uv","dots"],vel:"normal",caza:"50%",
+  que:"Un espíritu que posee a los vivos y les roba la cordura con solo mirarlo.",
+  fuerza:"Mirarlo cuando aparece te baja la cordura rápido.",
+  debil:"Si le tomas foto, desaparece un momento.",
+  p:["Estar cerca cuando se aparece te baja la cordura.","Al tomarle foto, se vuelve invisible.","En la cacería parpadea más lento y está invisible más tiempo.","A veces va hacia un jugador al azar.","En la foto no aparece, pero la música de la aparición sigue sonando."],
+  tip:"Tómale foto cuando aparezca: si se desvanece, es Ente."},
+ {n:"Poltergeist",en:"Poltergeist",ev:["caja","uv","esc"],vel:"normal",caza:"50%",
+  que:"El famoso 'espíritu ruidoso' que avienta todo.",
+  fuerza:"Puede lanzar muchos objetos al mismo tiempo.",
+  debil:"En un cuarto vacío casi no puede hacer nada.",
+  p:["Lanza varios objetos de golpe; cada uno baja 2% de cordura a los presentes.","Durante la cacería avienta algo cada medio segundo.","Lanza objetos más lejos que otros fantasmas."],
+  tip:"Haz una pila de objetos en su cuarto: si la hace explotar, es Poltergeist."},
+ {n:"Raiju",en:"Raiju",ev:["emf","orbes","dots"],vel:"2.5 m/s cerca de aparatos",caza:"50% (65% con aparatos)",
+  que:"Un demonio que se alimenta de la electricidad.",
+  fuerza:"Cerca de aparatos encendidos es más rápido y caza antes.",
+  debil:"Sin aparatos cerca vuelve a ser un fantasma normal.",
+  p:["Interfiere con linternas, aparatos y el chat de voz desde 15 m (otros, 10 m).","Se acelera si hay equipo encendido en su piso cerca de él.","Le afectan: cámaras en trípode, aparatos encendidos y sensores colocados.","No le afectan: las luces de la casa, el cuadro eléctrico, aparatos apagados ni cámaras tiradas en el piso."],
+  tip:"Apaga tu equipo en la cacería. Si los aparatos fallan desde muy lejos, es Raiju."},
+ {n:"Revenant",en:"Revenant",ev:["orbes","esc","frio"],vel:"1 m/s / 3 m/s al verte",caza:"50%",
+  que:"Un fantasma lento y violento que se vuelve rapidísimo al ver a su presa.",
+  fuerza:"Cuando te ve, es de los más rápidos del juego.",
+  debil:"Si te escondes, se mueve muy lento.",
+  p:["Pasa de muy lento a muy rápido en cuanto te ve.","Cuando llega a donde te vio y no estás, vuelve a ser lento.","No acelera poco a poco: el cambio es de golpe.","Si te pierde de vista, corre rápido hasta el último lugar donde te vio y luego frena en unos 5 s.","Escondido oirás sus pasos muy lentos, uno cada 2 segundos.","Los aparatos encendidos que lleves le dicen dónde estás, como si te viera."],
+  tip:"Nunca intentes correr ni hacer círculos: escóndete apenas empiece la cacería."},
+ {n:"Sombra",en:"Shade",ev:["emf","esc","frio"],vel:"normal",caza:"35%",
+  que:"El fantasma tímido: le incomoda que haya gente en su cuarto.",
+  fuerza:"Es tan tímido que cuesta encontrarlo.",
+  debil:"No caza ni hace eventos si hay alguien en su habitación.",
+  p:["Con gente en su cuarto, no interactúa ni caza.","Es poco activo, sobre todo con la cordura alta.","Se aparece más en forma de sombra.","No hace eventos de canto.","Da pocas pruebas cuando hay varios jugadores juntos.","Mientras más baja la cordura, más eventos de aparición hace."],
+  tip:"Si casi no hace nada mientras están en su cuarto, salgan y vigilen con cámara: puede ser Sombra."},
+ {n:"Espíritu",en:"Spirit",ev:["emf","caja","esc"],vel:"normal",caza:"50%",
+  que:"El fantasma más común; no tiene trucos especiales.",
+  fuerza:"Ninguna.",
+  debil:"El sahumerio le impide cazar 3 minutos (a otros, 90 s).",
+  p:["Se comporta como un fantasma promedio.","Después del sahumerio tarda 3 minutos en poder volver a cazar (otros, 90 s; el Demonio, 60 s)."],
+  tip:"Deja que la cordura baje del 25% para que cace seguido. Cuando empiece a cazar, usa sahumerio cerca de él y cuenta: si tarda 3 minutos en volver a cazar, es Espíritu."},
+ {n:"Thaye",en:"Thaye",ev:["orbes","esc","dots"],vel:"2.75 bajando a 1 m/s",caza:"75% bajando a 15%",
+  que:"Un espíritu que envejece rápido cuando los vivos están cerca.",
+  fuerza:"De joven es muy activo, rápido y caza pronto.",
+  debil:"Con la edad se vuelve lento, tranquilo y casi no caza.",
+  p:["Envejece cuando hay jugadores en su cuarto o cerca de él.","Al principio puede cazar hasta con 75% de cordura.","Toca más puertas que otros fantasmas.","No acelera cuando te ve.","Envejece más o menos cada 1 a 2 minutos si estás cerca, hasta 10 veces."],
+  tip:"Si al inicio es muy rápido y en cacerías posteriores es lento, es Thaye."},
+ {n:"Mímico",en:"The Mimic",ev:["caja","uv","frio"],fake:"orbes",vel:"copia a otros",caza:"según a quién copie",
+  que:"Un imitador que copia el comportamiento de otros fantasmas.",
+  fuerza:"Confunde imitando habilidades, velocidad y umbral de caza de otros.",
+  debil:"Siempre muestra orbes espectrales falsos, aunque no sean su prueba.",
+  p:["Cambia de fantasma imitado cada 30 s a 2 minutos.","Muestra orbes incluso en partidas sin pruebas.","No copia las pruebas del fantasma que imita.","Si es fantasma masculino, no puede imitar a Banshee ni Dayan.","Puede volver a imitar fantasmas que ya imitó.","En Pesadilla los orbes siempre aparecen y nunca pueden ser la prueba oculta."],
+  tip:"Si juntas cuatro pruebas y una es Orbes, es el Mímico."},
+ {n:"Gemelos",en:"The Twins",ev:["emf","caja","frio"],vel:"1.5 o 1.9 m/s",caza:"50%",
+  que:"Dos espíritus que actúan como uno.",
+  fuerza:"Pueden actuar en dos lugares al mismo tiempo.",
+  debil:"Al interactuar tanto, son más fáciles de detectar.",
+  p:["A veces hacen dos interacciones casi al mismo tiempo, una lejos de la otra.","En las cacerías uno va un poco lento y el otro un poco rápido.","El rápido empieza la cacería desde donde hizo la interacción lejana.","Con sensores de sonido verás actividad en dos lugares al mismo tiempo."],
+  tip:"Si una puerta se mueve en un lado de la casa y suena algo en otro al mismo tiempo, son Gemelos."},
+ {n:"Espectro",en:"Wraith",ev:["emf","caja","dots"],vel:"normal",caza:"50%",
+  que:"Un espíritu que flota y no toca el suelo.",
+  fuerza:"Puede teletransportarse junto a un jugador.",
+  debil:"Nunca pisa la sal.",
+  p:["Pasa sobre la sal sin dejar huellas.","Se teletransporta junto a alguien y deja EMF en ese punto.","Puede atravesar paredes fuera de los eventos."],
+  tip:"Pon sal en su cuarto y en pasillos: si nunca tiene pisadas, es Espectro."},
+ {n:"Yokai",en:"Yokai",ev:["caja","orbes","dots"],vel:"normal",caza:"50% (80% si hablas cerca)",
+  que:"Un espíritu al que le molesta el ruido de los vivos.",
+  fuerza:"Hablar cerca lo enfurece y puede cazar con la cordura muy alta.",
+  debil:"En la cacería solo te oye o detecta tus aparatos a 2.5 m.",
+  p:["Se activa mucho cuando hablan por el micrófono en su cuarto.","Puede cazar al 80% de cordura si oye voces cerca.","Durante la cacería casi no te detecta si estás callado."],
+  tip:"No hablen en su cuarto. En la cacería, quédense callados y con los aparatos apagados."},
+ {n:"Yurei",en:"Yurei",ev:["orbes","frio","dots"],vel:"normal",caza:"50%",
+  que:"Un espíritu que regresó con sed de venganza y ataca la mente.",
+  fuerza:"Baja mucho la cordura de los que están cerca.",
+  debil:"El sahumerio lo deja atrapado en su cuarto.",
+  p:["Puede cerrar una puerta de golpe y bajar 15% de cordura a los cercanos.","Es el único que mueve la puerta principal fuera de una cacería.","Abre o cierra puertas por completo, no a medias.","El sahumerio lo encierra 90 s en su habitación."],
+  tip:"Si la puerta principal se mueve sola sin que haya cacería, es Yurei."}
+];
+
+const state = {}; EV.forEach(e=>state[e.k]=0);
+
+// El Mímico siempre muestra orbes además de sus 3 pruebas
+const shows = g => g.fake ? [...g.ev, g.fake] : g.ev;
+const matches = g => {
+  const s = shows(g);
+  return EV.every(e => state[e.k]===1 ? s.includes(e.k) : state[e.k]===2 ? !s.includes(e.k) : true);
+};
+
+const evsEl = document.getElementById("evs");
+EV.forEach(e=>{
+  const b = document.createElement("button");
+  b.type="button"; b.className="ev"; b.id="ev-"+e.k; b.dataset.k=e.k; b.dataset.s="0";
+  b.innerHTML = `<span class="box" aria-hidden="true"></span><span class="t">${e.n}</span>`;
+  b.addEventListener("click",()=>{ state[e.k]=(state[e.k]+1)%3; render(); });
+  evsEl.appendChild(b);
+});
+document.getElementById("reset").addEventListener("click",()=>{ EV.forEach(e=>state[e.k]=0); render(); });
+
+function render(){
+  const list = G.filter(matches);
+  EV.forEach(e=>{
+    const b = document.getElementById("ev-"+e.k), s = state[e.k];
+    b.dataset.s = s;
+    b.querySelector(".box").textContent = s===1?"✓":s===2?"✗":"";
+    b.setAttribute("aria-label", e.n + (s===1?": encontrada":s===2?": descartada":": sin marcar"));
+    b.classList.toggle("dead", s===0 && !list.some(g=>shows(g).includes(e.k)));
+  });
+  const c = list.length;
+  document.getElementById("count").innerHTML = c===0 ? "Ningún fantasma coincide" :
+    c===1 ? "¡Es <b>"+list[0].n+"</b>!" : "<b>"+c+"</b> fantasmas posibles";
+  const L = document.getElementById("list");
+  const open = new Set([...L.querySelectorAll("details[open]")].map(d=>d.dataset.n));
+  if(!c){ L.innerHTML = '<div class="none">Revisa las pruebas marcadas: alguna combinación no existe.</div>'; return; }
+  L.innerHTML = list.map(g=>{
+    const tags = g.ev.map(k=>`<span class="tag${state[k]===1?" hit":""}">${SHORT[k]}</span>`).join("")
+      + (g.fake?`<span class="tag fake${state[g.fake]===1?" hit":""}">${SHORT[g.fake]} (falsa)</span>`:"");
+    return `<details data-n="${g.en}"${open.has(g.en)||c===1?" open":""}>
+      <summary><span class="name">${g.n}</span>${g.en!==g.n?`<span class="en">${g.en}</span>`:""}<span class="que">${g.que}</span><span class="tags">${tags}</span></summary>
+      <div class="body">
+        <div class="sw"><div class="f"><span class="lbl">Fuerza</span>${g.fuerza}</div><div class="w"><span class="lbl">Debilidad</span>${g.debil}</div></div>
+        <div class="stats"><span class="stat">Velocidad: <b>${g.vel}</b></span><span class="stat">Caza con cordura: <b>${g.caza}</b></span></div>
+        <div><span class="lbl">Pistas</span><ul>${g.p.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+        <div class="tip"><strong>Cómo reconocerlo:</strong> ${g.tip}</div>
+      </div></details>`;
+  }).join("");
+}
+render();
+
+// ---- Pestañas
+const tabs=[["tab-ev","view-ev"],["tab-wx","view-wx"]];
+tabs.forEach(([t,v])=>document.getElementById(t).addEventListener("click",()=>{
+  tabs.forEach(([t2,v2])=>{const on=t2===t;document.getElementById(t2).setAttribute("aria-selected",on);document.getElementById(v2).hidden=!on;});
+}));
+
+// ---- Clima
+const WX=[
+ {n:"Despejado",c:13,ef:["Sin efectos extra.","Poca iluminación afuera."]},
+ {n:"Amanecer",c:16,ef:["El clima más cálido: el frío del fantasma se nota más fácil.","Luz dorada que ilumina mejor algunas zonas."]},
+ {n:"Niebla",c:13,ef:["Afuera la niebla dificulta ver, sobre todo en las cámaras con visión nocturna.","Dentro de la casa la niebla desaparece."]},
+ {n:"Lluvia ligera",c:8,ef:["Ruido de lluvia que tapa otros sonidos.","Las velas y encendedores funcionan normal."]},
+ {n:"Lluvia fuerte",c:8,ef:["Mucho ruido y poca visibilidad.","Afuera no puedes encender encendedores ni velas; si sacas una encendida, se apaga.","En los campamentos no se pueden prender las fogatas."]},
+ {n:"Viento",c:8,ef:["Los árboles hacen mucho ruido con las hojas.","Por lo demás es como despejado."]},
+ {n:"Nieve",c:5,ef:["El clima más frío: cuesta más encontrar el cuarto del fantasma por temperatura.","Ves tu aliento en todos lados desde el inicio, así que el aliento no te dice dónde está el fantasma.","Neblina ligera afuera."]},
+ {n:"Luna de sangre",c:13,rare:true,ef:["Clima raro.","El fantasma es 15% más rápido en las cacerías.","Pierdes cordura el doble de rápido.","Pagan 10% más por el contrato."]}
+];
+const F=c=>Math.round((c*9/5+32)*10)/10;
+let wxSel=0;
+const wxsEl=document.getElementById("wxs");
+WX.forEach((w,i)=>{
+  const b=document.createElement("button");b.type="button";b.className="wx";b.id="wx-"+i;
+  b.innerHTML=`<b>${w.n}</b><span>${w.c} °C · ${F(w.c)} °F</span>`;
+  b.addEventListener("click",()=>{wxSel=i;renderWx();});wxsEl.appendChild(b);
+});
+const MIN=-10,MAX=20,pos=c=>((c-MIN)/(MAX-MIN)*100)+"%";
+function renderWx(){
+  const w=WX[wxSel];
+  WX.forEach((x,i)=>document.getElementById("wx-"+i).setAttribute("aria-pressed",i===wxSel));
+  const gap=w.c-1;
+  document.getElementById("wxinfo").innerHTML=`
+    <div class="big"><span class="deg">${w.c} °C</span><span class="sub">${F(w.c)} °F · temperatura inicial de la casa${w.rare?" · clima raro":""}</span></div>
+    <ul>${w.ef.map(x=>`<li>${x}</li>`).join("")}${w.c<=5?"<li>A 5 °C o menos ves tu aliento en cualquier cuarto.</li>":""}</ul>
+    <p class="note">Con este clima, el cuarto de un fantasma sin Heladas baja de ${w.c} °C hasta 1 °C; uno con Heladas sigue bajando de 0 °C hasta −10 °C.</p>`;
+  const marks=[
+    [-10,"−10 °C","Mínimo de<br>Heladas"],
+    [0,"0 °C","Prueba de<br>Heladas"],
+    [5,"5 °C","Ves tu<br>aliento"],
+    [20,"20 °C","Calefacción<br>(máximo)"]
+  ];
+  let h=marks.map(([c,v,l])=>`<div class="mk" style="left:${pos(c)}"><span class="mv">${v}</span><span class="ml">${l}</span></div>`).join("");
+  h+=`<div class="mk now" style="left:${pos(w.c)}"><span class="mv">${w.n}: ${w.c} °C</span></div>`;
+  document.getElementById("scale").innerHTML=h;
+}
+renderWx();
+
+// ---- Tabla de fantasmas con Heladas
+const FZ={
+ "Asuang":"Cuarto helado; caza lento y acelera muy rápido al verte.",
+ "Demonio":"Cuarto helado y cacerías muy seguidas.",
+ "Hantu":"Más rápido mientras más frío esté el cuarto (máximo bajo 0 °C, mínimo arriba de 15 °C). Con el cuadro apagado echa aliento helado al cazar.",
+ "Jinn":"Con el cuadro encendido la casa se calienta, pero su cuarto sigue helado.",
+ "Moroi":"Cuarto helado; maldice por la caja espectral.",
+ "Oni":"Cuarto helado y muy activo con gente cerca.",
+ "Onryo":"Cuarto helado; las velas le impiden cazar.",
+ "Revenant":"Cuarto helado; muy rápido al verte.",
+ "Sombra":"Cuarto helado pero poca actividad si hay gente dentro.",
+ "Mímico":"Cuarto helado, más orbes falsos.",
+ "Gemelos":"Cuarto helado; interacciones en dos lugares.",
+ "Yurei":"Cuarto helado; cierra puertas de golpe."
+};
+document.getElementById("ftable").innerHTML=G.filter(g=>g.ev.includes("frio")).map(g=>`<tr><td>${g.n}</td><td>${FZ[g.n]||""}</td></tr>`).join("");
+</script>
+
+</body></html>
