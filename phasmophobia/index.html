@@ -62,21 +62,6 @@ header p{margin:4px 0 0;color:var(--muted)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
 .seg button{font:inherit;font-size:.85rem;font-weight:700;border:0;border-radius:999px;padding:5px 11px;background:transparent;color:var(--muted);cursor:pointer;font-variant-numeric:tabular-nums}
 .seg button[aria-pressed="true"]{background:var(--uv);color:var(--paper)}
-.sharebtn{font:inherit;font-size:.85rem;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.sharebtn[aria-pressed="true"]{border-color:var(--ok);background:var(--ok-soft)}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
-.sharebtn[aria-pressed="true"] .dot{background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
-.sharemsg{width:100%;font-size:.8rem;color:var(--muted);margin:0}
-.sharemsg:empty{display:none}
-.room{width:100%;display:flex;flex-direction:column;gap:8px}
-.roomrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.roomrow[hidden]{display:none}
-.join{display:flex;gap:6px}
-.join input{width:92px;font:inherit;font-size:16px;font-weight:700;letter-spacing:.2em;text-align:center;border:1.5px solid var(--line);border-radius:999px;padding:6px 10px;background:transparent;color:var(--ink)}
-.join input:focus{outline:none;border-color:var(--uv)}
-.code{font-family:var(--hand);font-weight:700;font-size:2rem;line-height:1;letter-spacing:.12em;color:var(--uv);font-variant-numeric:tabular-nums}
-.live{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--ok)}
-.live .dot{background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
 .dsc{align-self:flex-start;font:inherit;font-size:.82rem;font-weight:700;border:1.5px solid var(--no);color:var(--no);background:transparent;border-radius:999px;padding:5px 12px;cursor:pointer}
 .descart{display:flex;flex-direction:column;gap:6px;margin-top:6px}
 .descart h3{font-family:var(--hand);font-size:1.15rem;margin:8px 0 0;color:var(--muted)}
@@ -117,7 +102,6 @@ header p{margin:4px 0 0;color:var(--muted)}
 .chip[aria-pressed="true"]{border-color:var(--uv);background:var(--uv-soft);color:var(--ink)}
 .empty{padding:16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
 mark{background:var(--uv-soft);color:inherit;border-radius:3px;padding:0 2px;outline:1px solid var(--uv)}
-.join input::placeholder{letter-spacing:normal;font-weight:400}
 .side,.main{display:flex;flex-direction:column;gap:18px;min-width:0}
 /* Celular: la tabla de equipo se vuelve tarjetas */
 @media (max-width:700px){
@@ -241,19 +225,6 @@ footer{font-size:.78rem;color:var(--muted)}
       <span class="lbl">Pruebas en la partida</span>
       <div class="seg" id="dif" role="group" aria-label="Pruebas que da la partida">
         <button type="button" data-n="3" aria-pressed="true">3</button><button type="button" data-n="2" aria-pressed="false">2</button><button type="button" data-n="1" aria-pressed="false">1</button><button type="button" data-n="0" aria-pressed="false">0</button>
-      </div>
-      <div class="room" id="room">
-        <span class="lbl">Partida con amigos</span>
-        <div class="roomrow" id="roomoff">
-          <button type="button" class="sharebtn" id="rcreate"><span class="dot"></span>Crear partida</button>
-          <form class="join" id="rjoin"><input id="rcode" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Código" aria-label="Código de 4 dígitos" autocomplete="off"><button type="submit" class="sharebtn">Unirme</button></form>
-        </div>
-        <div class="roomrow" id="roomon" hidden>
-          <span class="code" id="rshow">0000</span>
-          <span class="live"><span class="dot"></span>En vivo</span>
-          <button type="button" class="sharebtn" id="rleave">Salir</button>
-        </div>
-        <p class="sharemsg" id="sharemsg"></p>
       </div>
     </div>
   </section>
@@ -583,11 +554,11 @@ EV.forEach(e=>{
   const b = document.createElement("button");
   b.type="button"; b.className="ev"; b.id="ev-"+e.k; b.dataset.k=e.k; b.dataset.s="0";
   b.innerHTML = `<span class="box" aria-hidden="true"></span><span class="t">${e.n}</span>`;
-  b.addEventListener("click",()=>{ state[e.k]=(state[e.k]+1)%3; render(); pushShared(); });
+  b.addEventListener("click",()=>{ state[e.k]=(state[e.k]+1)%3; render(); });
   evsEl.appendChild(b);
 });
-document.getElementById("reset").addEventListener("click",()=>{ EV.forEach(e=>state[e.k]=0); desc.clear(); render(); pushShared(); });
-document.querySelectorAll("#dif button").forEach(b=>b.addEventListener("click",()=>{ dif=+b.dataset.n; render(); pushShared(); }));
+document.getElementById("reset").addEventListener("click",()=>{ EV.forEach(e=>state[e.k]=0); desc.clear(); render(); });
+document.querySelectorAll("#dif button").forEach(b=>b.addEventListener("click",()=>{ dif=+b.dataset.n; render(); }));
 
 function render(){
   const all = G.filter(matches);
@@ -627,8 +598,8 @@ function render(){
 }
 function norm(t){return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");}
 document.getElementById("q").addEventListener("input",render);
-document.getElementById("list").addEventListener("click",e=>{const b=e.target.closest("[data-out]"); if(!b) return; desc.add(b.dataset.out); render(); pushShared();});
-document.getElementById("descart").addEventListener("click",e=>{const b=e.target.closest("[data-undo]"); if(!b) return; desc.delete(b.dataset.undo); render(); pushShared();});
+document.getElementById("list").addEventListener("click",e=>{const b=e.target.closest("[data-out]"); if(!b) return; desc.add(b.dataset.out); render();});
+document.getElementById("descart").addEventListener("click",e=>{const b=e.target.closest("[data-undo]"); if(!b) return; desc.delete(b.dataset.undo); render();});
 render();
 
 // ---- Pestañas
@@ -693,82 +664,6 @@ const FZ={
  "Yurei":"Cuarto helado; cierra puertas de golpe."
 };
 document.getElementById("ftable").innerHTML=G.filter(g=>g.ev.includes("frio")).map(g=>`<tr><td>${g.n}</td><td>${FZ[g.n]||""}</td></tr>`).join("");
-
-// ---- Partida con amigos: código de 4 dígitos, todos ven y marcan lo mismo (Supabase)
-const SB = "https://aqejoebvdpszpxtahgvu.supabase.co/rest/v1/partidas";
-const SBK = "sb_publishable_3UCVdkXQ388XOK_feA4CFQ_WUVq1Ekq";
-const SBH = {apikey:SBK, Authorization:"Bearer "+SBK, "Content-Type":"application/json"};
-const shareMsg = document.getElementById("sharemsg");
-let room = null, seen = "", busy = 0, quietUntil = 0, poll = 0, applying = false, wTimer = 0;
-const LSK = "phasmo-partida";
-function sharedState(){ return {ev:{...state}, dif, desc:[...desc]}; }
-function applyState(d){
-  if(!d) return; applying = true;
-  EV.forEach(e=>state[e.k] = (d.ev && [0,1,2].includes(+d.ev[e.k])) ? +d.ev[e.k] : 0);
-  dif = [0,1,2,3].includes(+d.dif) ? +d.dif : 3;
-  desc.clear(); (Array.isArray(d.desc)?d.desc:[]).forEach(x=>{ if(G.some(g=>g.en===x)) desc.add(x); });
-  render(); applying = false;
-}
-function errMsg(e){
-  if(e && e.status===404) return "Las partidas todavía no están activadas: falta correr el código SQL de «partidas» en Supabase.";
-  if(e && e.status) return "El servidor de partidas respondió con un error ("+e.status+"). Intenta en un momento.";
-  return /ingler\.me$/.test(location.hostname) ? "No hay conexión con el servidor de partidas. Revisa tu internet." : "La partida con amigos solo funciona desde ingler.me/phasmophobia.";
-}
-async function sbGet(code){
-  const r = await fetch(SB+"?codigo=eq."+code+"&select=data,updated_at", {headers:SBH, cache:"no-store"});
-  if(!r.ok) throw {status:r.status}; const j = await r.json(); return j[0] || null;
-}
-async function sbPut(code, data){
-  const updated_at = new Date().toISOString();
-  const r = await fetch(SB+"?on_conflict=codigo", {method:"POST", headers:{...SBH, Prefer:"resolution=merge-duplicates,return=minimal"}, body:JSON.stringify([{codigo:code, data, updated_at}])});
-  if(!r.ok) throw {status:r.status}; return updated_at;
-}
-function pushShared(){
-  if(!room || applying) return;
-  quietUntil = Date.now()+1500;
-  clearTimeout(wTimer);
-  wTimer = setTimeout(async()=>{ busy++; try{ seen = await sbPut(room, sharedState()); shareMsg.textContent=""; }catch(e){ shareMsg.textContent="No se pudo guardar el cambio. Revisa tu internet."; } busy--; }, 250);
-}
-async function tick(){
-  if(!room || document.hidden || busy || Date.now()<quietUntil) return;
-  try{ const row = await sbGet(room); if(row && row.updated_at!==seen && !busy && Date.now()>=quietUntil){ seen=row.updated_at; applyState(row.data); } }catch(e){}
-}
-function showRoom(){
-  document.getElementById("roomoff").hidden = !!room;
-  document.getElementById("roomon").hidden = !room;
-  if(room) document.getElementById("rshow").textContent = room;
-  try{ room ? localStorage.setItem(LSK, room) : localStorage.removeItem(LSK); }catch(e){}
-  clearInterval(poll); if(room) poll = setInterval(tick, 2000);
-}
-document.getElementById("rcreate").addEventListener("click", async()=>{
-  shareMsg.textContent = "Creando partida…";
-  try{
-    for(let i=0;i<8;i++){
-      const code = String(Math.floor(Math.random()*10000)).padStart(4,"0");
-      const row = await sbGet(code);
-      if(row && Date.now()-Date.parse(row.updated_at) < 12*3600e3) continue; // ocupado por otra partida reciente
-      seen = await sbPut(code, sharedState()); room = code; showRoom();
-      shareMsg.textContent = "Pásales este código a tus amigos. Todos pueden marcar y ven lo mismo en vivo.";
-      return;
-    }
-    shareMsg.textContent = "No encontré un código libre. Intenta otra vez.";
-  }catch(e){ shareMsg.textContent = errMsg(e); }
-});
-document.getElementById("rjoin").addEventListener("submit", async ev=>{
-  ev.preventDefault();
-  const code = document.getElementById("rcode").value.replace(/\D/g,"");
-  if(code.length!==4){ shareMsg.textContent = "El código tiene 4 números."; return; }
-  shareMsg.textContent = "Buscando partida…";
-  try{
-    const row = await sbGet(code);
-    if(!row){ shareMsg.textContent = "No existe una partida con el código "+code+"."; return; }
-    room = code; seen = row.updated_at; applyState(row.data); showRoom(); shareMsg.textContent = "";
-    document.getElementById("rcode").value = "";
-  }catch(e){ shareMsg.textContent = errMsg(e); }
-});
-document.getElementById("rleave").addEventListener("click",()=>{ room=null; showRoom(); shareMsg.textContent="Saliste de la partida. Lo marcado se queda solo en tu pantalla."; });
-document.addEventListener("visibilitychange",()=>{ if(!document.hidden) tick(); });
-try{ const saved = localStorage.getItem(LSK); if(saved && /^\d{4}$/.test(saved)){ sbGet(saved).then(row=>{ if(row){ room=saved; seen=row.updated_at; applyState(row.data); showRoom(); } }).catch(()=>{}); } }catch(e){}
 
 // ---- Temporizador de incienso
 const fmt = t => Math.floor(t/60)+":"+String(Math.floor(t%60)).padStart(2,"0");
